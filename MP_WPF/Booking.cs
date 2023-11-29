@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectMP
 {
-    public abstract class HotelRoom
+    public class Booking
     {
-        public int price;
-        public int numberOfPerson;
-        public int roomNumber;
+        public HotelRoom room;
+        public BookingDates dates;
+        public bool flagOfBooking;
     }
 }
