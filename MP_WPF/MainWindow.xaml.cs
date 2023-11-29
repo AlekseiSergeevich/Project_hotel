@@ -21,8 +21,20 @@ namespace ProjectMP
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool firstFigureForQuantityOfDaysOfSimulation = true;
+        bool firtsFigureForTextBoxQuantityOfRooms = true;
+        bool firstFigureQuantityOfLux = true;
+        bool firtsFigureQuantityOfJuniorSuites = true;
+        bool firstFigureQuantityOfSingleRoom = true;
+        bool firtsFigureQuantityOfDoubleRoom = true;
+        bool firstFigureQuantityOfSingleRoomWithFoldingSofa = true;
         int QuantityOfDaysOfSimulation;
         int QuantityOfRooms;
+        int QuantityOfLux;
+        int QuantityOfJuniorSuite;
+        int QuantityOfSingleRoom;
+        int QuantityOfDoubleRoom;
+        int QuantityOfSingleRoomWithFoldingSofa;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,19 +55,46 @@ namespace ProjectMP
 
         private void СontinueButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsSimulation2.Visibility = Visibility.Visible;
-            SettingsSimulation.Visibility = Visibility.Visible;
-            QuantityOfDaysOfSimulation = int.Parse(TextBoxQuantityOfDaysOfSimulation.Text);
-            QuantityOfRooms = int.Parse(TextBoxQuantityOfRooms.Text);
+            if (TextBoxQuantityOfDaysOfSimulation.Text == "" || TextBoxQuantityOfRooms.Text == "")
+            {
+                SettingsSimulation.Visibility = Visibility.Collapsed;
+                EmptyInput.Visibility = Visibility.Visible;
+            }
+            else if(int.Parse(TextBoxQuantityOfDaysOfSimulation.Text)>30 || int.Parse(TextBoxQuantityOfRooms.Text)>30 || int.Parse(TextBoxQuantityOfDaysOfSimulation.Text) < 12 || int.Parse(TextBoxQuantityOfRooms.Text) < 20)
+            {
+                SettingsSimulation.Visibility = Visibility.Collapsed;
+                IncorrectInput.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SettingsSimulation2.Visibility = Visibility.Visible;
+                SettingsSimulation.Visibility = Visibility.Visible;
+                QuantityOfDaysOfSimulation = int.Parse(TextBoxQuantityOfDaysOfSimulation.Text);
+                QuantityOfRooms = int.Parse(TextBoxQuantityOfRooms.Text);
+            }
+            
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
+            TextBoxQuantityOfDaysOfSimulation.Clear();
+            TextBoxQuantityOfRooms.Clear();
+            firstFigureForQuantityOfDaysOfSimulation = true;
+            firtsFigureForTextBoxQuantityOfRooms = true;
             SettingsSimulation.Visibility = Visibility.Collapsed;
             Main.Visibility = Visibility.Visible;
         }
         private void Сontinue2ButtonClick(object sender, RoutedEventArgs e)
         {
-
+            QuantityOfLux = int.Parse(TextBoxQuantityOfLux.Text);
+            QuantityOfJuniorSuite = int.Parse(TextBoxQuantityOfJuniorSuite.Text);
+            QuantityOfSingleRoom =  int.Parse(TextBoxQuantityOfSingleRoom.Text);
+            QuantityOfDoubleRoom = int.Parse(TextBoxQuantityOfDoubleRoom.Text);
+            QuantityOfSingleRoomWithFoldingSofa = int.Parse(TextBoxQuantityOfSingleRoomWithFoldingSofa.Text);
+            if(QuantityOfLux+ QuantityOfJuniorSuite+ QuantityOfSingleRoom+ QuantityOfDoubleRoom+ QuantityOfSingleRoomWithFoldingSofa!= QuantityOfRooms)
+            {
+                SettingsSimulation2.Visibility = Visibility.Collapsed;
+                IncorrectSum.Visibility = Visibility.Visible;
+            }
         }
         private void Back2ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -64,18 +103,97 @@ namespace ProjectMP
         }
         private void TextBoxQuantityOfDaysOfSimulation_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0))
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureForQuantityOfDaysOfSimulation))
             {
-                e.Handled = true;
+                e.Handled = true;               
+            }
+            if(Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firstFigureForQuantityOfDaysOfSimulation = false;
             }
         }
         private void TextBoxQuantityOfRooms_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0))
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firtsFigureForTextBoxQuantityOfRooms))
             {
                 e.Handled = true;
             }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firtsFigureForTextBoxQuantityOfRooms = false;
+            }
         }
-        //доделать для остальных textbox и проверку на то, чтобы сумма всех номеров разных типов была равна общему количеству номеров.
+        private void TextBoxQuantityOfLux_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfLux))
+            {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firstFigureQuantityOfLux = false;
+            }
+        }
+        private void TextBoxQuantityOfJuniorSuite_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firtsFigureQuantityOfJuniorSuites))
+            {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firtsFigureQuantityOfJuniorSuites = false;
+            }
+        }
+        private void TextBoxQuantityOfSingleRoom_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfSingleRoom))
+            {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firstFigureQuantityOfSingleRoom = false;
+            }
+        }
+        private void TextBoxQuantityOfDoubleRoom_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firtsFigureQuantityOfDoubleRoom))
+            {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firtsFigureQuantityOfDoubleRoom = false;
+            }
+        }
+        private void TextBoxQuantityOfSingleRoomWithFoldingSofa_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfSingleRoomWithFoldingSofa))
+            {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firstFigureQuantityOfSingleRoomWithFoldingSofa = false;
+            }
+        }
+
+        private void OKButtonClick(object sender, RoutedEventArgs e)
+        {
+            SettingsSimulation.Visibility = Visibility.Visible;
+            EmptyInput.Visibility = Visibility.Collapsed;
+        }
+        private void OK2ButtonClick(object sender, RoutedEventArgs e)
+        {
+            SettingsSimulation.Visibility = Visibility.Visible;
+            IncorrectInput.Visibility = Visibility.Collapsed;
+        }
+
+        private void OK3ButtonClick(object sender, RoutedEventArgs e)
+        {   
+            IncorrectSum.Visibility = Visibility.Collapsed;
+            SettingsSimulation2.Visibility = Visibility.Visible;          
+        }
     }
 }
