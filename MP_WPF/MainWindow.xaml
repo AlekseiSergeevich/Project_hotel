@@ -12,15 +12,6 @@
             <Button x:Name="Reports" Content="Предыдущие отчеты" FontSize="50" Click="ReportsButtonClick" Margin="300,318,300,530" RenderTransformOrigin="0.5,0.5"/>
             <Button x:Name="Exit" Content="Выход" FontSize="50" Click="ExitButtonClick" Margin="300,548,300,300" RenderTransformOrigin="0.5, 0.5"/>
         </Grid>
-        <Grid x:Name="EmptyInput" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
-            <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="74" Margin="330,358,0,0" TextWrapping="Wrap" FontSize="40" Text="&#x9;Заполните все поля" VerticalAlignment="Top" Width="711" BorderBrush="{x:Null}" BorderThickness="0"/>
-            <Button x:Name ="OK" Content="OK" FontSize="30" HorizontalAlignment="Left" Margin="1073,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="OKButtonClick"/>
-        </Grid>
-        <Grid x:Name="IncorrectInput" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
-            <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="197" Margin="249,352,0,0" TextWrapping="Wrap" FontSize="40" Text="Период моделирования от 12 до 30&#xD;&#xA;Общее количество номеров от 20 до 30" VerticalAlignment="Top" Width="837" BorderBrush="{x:Null}" BorderThickness="0"/>
-            <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="74" Margin="171,235,0,0" TextWrapping="Wrap" FontSize="40" Text="&#x9;  Одно из значений вне диапазона" VerticalAlignment="Top" Width="996" BorderBrush="{x:Null}" BorderThickness="0"/>
-            <Button x:Name ="OK2" Content="OK" FontSize="30" HorizontalAlignment="Left" Margin="1073,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="OK2ButtonClick"/>
-        </Grid>
         <Grid x:Name="SettingsSimulation" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="81" Margin="422,10,0,0" TextWrapping="Wrap" FontSize="40" Text="Настройки моделирования" VerticalAlignment="Top" Width="518" BorderBrush="{x:Null}" BorderThickness="0"/>
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="39" Margin="153,117,0,0" TextWrapping="Wrap" FontSize="30" Text="Период моделирования" VerticalAlignment="Top" Width="468" BorderBrush="{x:Null}" BorderThickness="0"/>
@@ -29,6 +20,15 @@
             <Button x:Name ="Back" Content="Назад" FontSize="30" HorizontalAlignment="Left" Margin="65,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="BackButtonClick"/>
             <TextBox x:Name="TextBoxQuantityOfDaysOfSimulation" HorizontalAlignment="Left" ToolTip="Число от 12 до 30"  Height="25" Margin="621,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfDaysOfSimulation_PreviewTextInput"/>
             <TextBox x:Name="TextBoxQuantityOfRooms" HorizontalAlignment="Left" ToolTip="Число от 20 до 30" Height="22" Margin="621,188,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfRooms_PreviewTextInput"/>
+        </Grid>
+        <Grid x:Name="EmptyInput" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
+            <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="74" Margin="330,358,0,0" TextWrapping="Wrap" FontSize="40" Text="&#x9;Заполните все поля" VerticalAlignment="Top" Width="711" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Button x:Name ="OK" Content="OK" FontSize="30" HorizontalAlignment="Left" Margin="1073,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="OKButtonClick"/>
+        </Grid>
+        <Grid x:Name="IncorrectInput" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
+            <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="197" Margin="249,352,0,0" TextWrapping="Wrap" FontSize="40" Text="Период моделирования от 12 до 30&#xD;&#xA;Общее количество номеров от 20 до 30" VerticalAlignment="Top" Width="837" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="74" Margin="171,235,0,0" TextWrapping="Wrap" FontSize="40" Text="&#x9;  Одно из значений вне диапазона" VerticalAlignment="Top" Width="996" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <Button x:Name ="OK2" Content="OK" FontSize="30" HorizontalAlignment="Left" Margin="1073,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="OK2ButtonClick"/>
         </Grid>
         <Grid x:Name="SettingsSimulation2" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Height="81" Background="RoyalBlue" Foreground="White" Margin="422,10,0,0" TextWrapping="Wrap" FontSize="40" Text="Настройки моделирования" VerticalAlignment="Top" Width="518" BorderBrush="{x:Null}" BorderThickness="0"/>
@@ -49,6 +49,11 @@
         <Grid x:Name="IncorrectSum" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Height="279" Background="RoyalBlue" Foreground="White" Margin="266,280,0,0" TextWrapping="Wrap" FontSize="40" Text="Сумма номеров каждого типа должна быть равна общему количеству номеров" VerticalAlignment="Top" Width="857" BorderBrush="{x:Null}" BorderThickness="0"/>
             <Button x:Name ="OK3" Content="OK" FontSize="30" HorizontalAlignment="Left" Margin="1073,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="OK3ButtonClick"/>
+        </Grid>
+        <Grid x:Name="Hotel" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="412" VerticalAlignment="Top" Width="1335"/>
+            <TextBox HorizontalAlignment="Left" Height="69" Margin="40,453,0,0" TextWrapping="Wrap" Text="Зеленый - номер свободен&#xD;&#xA;Красный - номер занят &#xD;&#xA;Фиолетовый - номер забронирован" VerticalAlignment="Top" Width="300"/>
+
         </Grid>
     </Grid>
 </Window>

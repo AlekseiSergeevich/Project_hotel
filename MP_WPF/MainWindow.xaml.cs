@@ -95,6 +95,30 @@ namespace ProjectMP
                 SettingsSimulation2.Visibility = Visibility.Collapsed;
                 IncorrectSum.Visibility = Visibility.Visible;
             }
+            SettingsSimulation2.Visibility = Visibility.Collapsed;
+            Hotel.Visibility = Visibility.Visible;
+            Button[] buttons = new Button[QuantityOfRooms];
+            int left = -1150;
+            int top = -800;
+            int down = 0;
+            for (int i = 0, j = 1; i < QuantityOfRooms; i++, j++)
+            {
+                buttons[i] = new Button();
+                buttons[i].Content = "Room №" + j.ToString();
+                buttons[i].Name = "Room" + j.ToString();
+                buttons[i].Click += RoomClick;
+                Hotel.Children.Add(buttons[i]);
+                buttons[i].Height = 70;
+                buttons[i].Width = 70;
+                if (i % 10 == 0 && i != 0)
+                {
+                    left -= 2500;
+                    down -= 200;
+                }
+                buttons[i].Margin = new Thickness(left, top, 0, down);
+                left += 250;
+            }
+
         }
         private void Back2ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -194,6 +218,11 @@ namespace ProjectMP
         {   
             IncorrectSum.Visibility = Visibility.Collapsed;
             SettingsSimulation2.Visibility = Visibility.Visible;          
+        }
+
+        private void RoomClick(object sender, RoutedEventArgs e)
+        {
+                
         }
     }
 }
