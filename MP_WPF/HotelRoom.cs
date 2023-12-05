@@ -11,5 +11,9 @@ namespace ProjectMP
         public int price;
         public int numberOfPerson;
         public string type;
+        public override string ToString()
+        {
+            return (System.String.Format("Тип номера: {0}  Стоимость: {1}", type, price));
+        }
     }
 }
