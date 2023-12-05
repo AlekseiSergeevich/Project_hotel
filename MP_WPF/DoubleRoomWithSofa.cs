@@ -8,11 +8,11 @@ namespace ProjectMP
 {
     public class DoubleRoomWithSofa : HotelRoom
     {
-        DoubleRoomWithSofa(int p, int count, int n)
+        public DoubleRoomWithSofa()
         {
-            price = p;
-            numberOfPerson = count;
-            roomNumber = n;
+            price = 3000;
+            numberOfPerson = 2;
+            type = "Двухместный с диваном";
         }
     }
 }

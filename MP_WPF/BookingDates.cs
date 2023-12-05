@@ -10,7 +10,7 @@ namespace ProjectMP
     {
         public DateTime startOfBooking;
         public DateTime endOfBooking;
-        BookingDates(DateTime s, DateTime e)
+        public BookingDates(DateTime s, DateTime e)
         {
             startOfBooking = s;
             endOfBooking = e;

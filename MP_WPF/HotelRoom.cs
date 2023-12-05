@@ -10,6 +10,6 @@ namespace ProjectMP
     {
         public int price;
         public int numberOfPerson;
-        public int roomNumber;
+        public string type;
     }
 }
