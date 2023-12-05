@@ -8,11 +8,11 @@ namespace ProjectMP
 {
     public class JuniorSuite : HotelRoom //полулюкс если что 
     {
-        JuniorSuite(int p, int count, int n)
+        public JuniorSuite()
         {
-            price = p;
-            numberOfPerson = count;
-            roomNumber = n;
+            price = 3500;
+            numberOfPerson = 1;
+            type = "Полулюкс";
         }
     }
 }

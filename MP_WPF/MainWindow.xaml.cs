@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MP_WPF;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,20 +22,24 @@ namespace ProjectMP
     /// </summary>
     public partial class MainWindow : Window
     {
+
         bool firstFigureForQuantityOfDaysOfSimulation = true;
         bool firtsFigureForTextBoxQuantityOfRooms = true;
-        bool firstFigureQuantityOfLux = true;
+        bool firstFigureQuantityOfLuxe = true;
         bool firtsFigureQuantityOfJuniorSuites = true;
         bool firstFigureQuantityOfSingleRoom = true;
         bool firtsFigureQuantityOfDoubleRoom = true;
         bool firstFigureQuantityOfSingleRoomWithFoldingSofa = true;
-        int QuantityOfDaysOfSimulation;
-        int QuantityOfRooms;
-        int QuantityOfLux;
-        int QuantityOfJuniorSuite;
-        int QuantityOfSingleRoom;
-        int QuantityOfDoubleRoom;
-        int QuantityOfSingleRoomWithFoldingSofa;
+        int quantityOfDaysOfSimulation;
+        int quantityOfRooms;
+        int quantityOfLuxe;
+        int quantityOfJuniorSuite;
+        int quantityOfSingleRoom;
+        int quantityOfDoubleRoom;
+        int quantityOfSingleRoomWithFoldingSofa;
+        Button[] buttons;
+        List<HotelRoom> hotelRooms = new List<HotelRoom>();
+        List<Booking> wholeInformationAboutBooking = new List<Booking>();
         public MainWindow()
         {
             InitializeComponent();
@@ -69,8 +74,8 @@ namespace ProjectMP
             {
                 SettingsSimulation2.Visibility = Visibility.Visible;
                 SettingsSimulation.Visibility = Visibility.Visible;
-                QuantityOfDaysOfSimulation = int.Parse(TextBoxQuantityOfDaysOfSimulation.Text);
-                QuantityOfRooms = int.Parse(TextBoxQuantityOfRooms.Text);
+                quantityOfDaysOfSimulation = int.Parse(TextBoxQuantityOfDaysOfSimulation.Text);
+                quantityOfRooms = int.Parse(TextBoxQuantityOfRooms.Text);
             }
             
         }
@@ -85,39 +90,76 @@ namespace ProjectMP
         }
         private void Сontinue2ButtonClick(object sender, RoutedEventArgs e)
         {
-            QuantityOfLux = int.Parse(TextBoxQuantityOfLux.Text);
-            QuantityOfJuniorSuite = int.Parse(TextBoxQuantityOfJuniorSuite.Text);
-            QuantityOfSingleRoom =  int.Parse(TextBoxQuantityOfSingleRoom.Text);
-            QuantityOfDoubleRoom = int.Parse(TextBoxQuantityOfDoubleRoom.Text);
-            QuantityOfSingleRoomWithFoldingSofa = int.Parse(TextBoxQuantityOfSingleRoomWithFoldingSofa.Text);
-            if(QuantityOfLux+ QuantityOfJuniorSuite+ QuantityOfSingleRoom+ QuantityOfDoubleRoom+ QuantityOfSingleRoomWithFoldingSofa!= QuantityOfRooms)
+            quantityOfLuxe = int.Parse(TextBoxQuantityOfLuxe.Text);
+            quantityOfJuniorSuite = int.Parse(TextBoxQuantityOfJuniorSuite.Text);
+            quantityOfSingleRoom =  int.Parse(TextBoxQuantityOfSingleRoom.Text);
+            quantityOfDoubleRoom = int.Parse(TextBoxQuantityOfDoubleRoom.Text);
+            quantityOfSingleRoomWithFoldingSofa = int.Parse(TextBoxQuantityOfSingleRoomWithFoldingSofa.Text);
+            if(quantityOfLuxe+quantityOfJuniorSuite+quantityOfSingleRoom+quantityOfDoubleRoom+quantityOfSingleRoomWithFoldingSofa!= quantityOfRooms)
             {
                 SettingsSimulation2.Visibility = Visibility.Collapsed;
                 IncorrectSum.Visibility = Visibility.Visible;
             }
-            SettingsSimulation2.Visibility = Visibility.Collapsed;
-            Hotel.Visibility = Visibility.Visible;
-            Button[] buttons = new Button[QuantityOfRooms];
-            int left = -1150;
-            int top = -800;
-            int down = 0;
-            for (int i = 0, j = 1; i < QuantityOfRooms; i++, j++)
+            else
             {
-                buttons[i] = new Button();
-                buttons[i].Content = "Room №" + j.ToString();
-                buttons[i].Name = "Room" + j.ToString();
-                buttons[i].Click += RoomClick;
-                Hotel.Children.Add(buttons[i]);
-                buttons[i].Height = 70;
-                buttons[i].Width = 70;
-                if (i % 10 == 0 && i != 0)
+                SettingsSimulation2.Visibility = Visibility.Collapsed;
+                Hotel.Visibility = Visibility.Visible;
+                int numberOfRoom = 1;
+                for(int i = 0;i< quantityOfLuxe; i++)
                 {
-                    left -= 2500;
-                    down -= 200;
+                    hotelRooms.Add(new Luxe());
+                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    numberOfRoom++;
                 }
-                buttons[i].Margin = new Thickness(left, top, 0, down);
-                left += 250;
+                for (int i = 0; i < quantityOfJuniorSuite; i++)
+                {
+                    hotelRooms.Add(new JuniorSuite());
+                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    numberOfRoom++;
+                }
+                for (int i = 0; i < quantityOfSingleRoom; i++)
+                {
+                    hotelRooms.Add(new SingleRoom());
+                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    numberOfRoom++;
+                }
+                for (int i = 0; i < quantityOfDoubleRoom; i++)
+                {
+                    hotelRooms.Add(new DoubleRoom());
+                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    numberOfRoom++;
+                }
+                for (int i = 0; i < quantityOfSingleRoomWithFoldingSofa; i++)
+                {
+                    hotelRooms.Add(new DoubleRoomWithSofa());
+                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    numberOfRoom++;
+                }
+                buttons = new Button[quantityOfRooms];
+                int left = -1150;
+                int top = -800;
+                int down = 0;
+                for (int i = 0, j = 1; i < quantityOfRooms; i++, j++)
+                {
+                    buttons[i] = new Button();
+                    buttons[i].Content = "Room №" + j.ToString();
+                    buttons[i].Name = "Room" + j.ToString();
+                    buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
+                    buttons[i].Click += RoomClick;
+                    Hotel.Children.Add(buttons[i]);
+                    buttons[i].Height = 70;
+                    buttons[i].Width = 70;
+                    if (i % 10 == 0 && i != 0)
+                    {
+                        left -= 2500;
+                        down -= 200;
+                    }
+                    buttons[i].Margin = new Thickness(left, top, 0, down);
+                    left += 250;
+                }
+
             }
+            
 
         }
         private void Back2ButtonClick(object sender, RoutedEventArgs e)
@@ -147,15 +189,15 @@ namespace ProjectMP
                 firtsFigureForTextBoxQuantityOfRooms = false;
             }
         }
-        private void TextBoxQuantityOfLux_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void TextBoxQuantityOfLuxe_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfLux))
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfLuxe))
             {
                 e.Handled = true;
             }
             if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
             {
-                firstFigureQuantityOfLux = false;
+                firstFigureQuantityOfLuxe = false;
             }
         }
         private void TextBoxQuantityOfJuniorSuite_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -222,7 +264,18 @@ namespace ProjectMP
 
         private void RoomClick(object sender, RoutedEventArgs e)
         {
-                
+            RoomInformation roomInformation = new RoomInformation();
+            Button clickedButton = sender as Button;
+            for (int i = 1; i <= quantityOfRooms; i++)
+            {
+                string str = "Room" + i.ToString();
+                if (clickedButton.Name == str)
+                {
+                    roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i-1].room.ToString();
+                    break;
+                }
+            }
+            roomInformation.ShowDialog();
         }
     }
 }

@@ -36,3 +36,5 @@ C:\Users\One\source\repos\MP_WPF_main\MP_WPF\obj\Debug\MP_WPF.csproj.GenerateRes
 C:\Users\One\source\repos\MP_WPF_main\MP_WPF\obj\Debug\MP_WPF.csproj.CoreCompileInputs.cache
 C:\Users\One\source\repos\MP_WPF_main\MP_WPF\obj\Debug\MP_WPF.exe
 C:\Users\One\source\repos\MP_WPF_main\MP_WPF\obj\Debug\MP_WPF.pdb
+C:\Users\One\source\repos\MP_WPF_main\MP_WPF\obj\Debug\RoomInformation.g.cs
+C:\Users\One\source\repos\MP_WPF_main\MP_WPF\obj\Debug\RoomInformation.baml

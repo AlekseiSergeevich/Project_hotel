@@ -8,11 +8,14 @@ namespace ProjectMP
 {
     public class SingleRoom : HotelRoom
     {
-        SingleRoom(int p, int count, int n)
+        public SingleRoom()
         {
-            price = p;
-            numberOfPerson = count;
-            roomNumber = n;
+            price = 2500;
+            numberOfPerson = 1;
+            type = "Одноместный";
+        
         }
     }
+    
+    
 }

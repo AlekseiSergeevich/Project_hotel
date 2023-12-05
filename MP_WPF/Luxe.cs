@@ -8,11 +8,11 @@ namespace ProjectMP
 {
     public class Luxe : HotelRoom
     {
-        Luxe(int p, int count, int n)
+        public Luxe()
         {
-            price = p;
-            numberOfPerson = count;
-            roomNumber = n;
+            price = 4500;
+            numberOfPerson = 2;
+            type = "Люкс";
         }
     }
 }

@@ -61,6 +61,9 @@
     <Compile Include="DoubleRoom.cs" />
     <Compile Include="DoubleRoomWithSofa.cs" />
     <Compile Include="RequestGenerator.cs" />
+    <Compile Include="RoomInformation.xaml.cs">
+      <DependentUpon>RoomInformation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleRoom.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -77,6 +80,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RoomInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -103,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Hotel.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
