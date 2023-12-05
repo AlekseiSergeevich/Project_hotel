@@ -12,7 +12,7 @@ namespace ProjectMP
         {
             price = 3000;
             numberOfPerson = 2;
-            type = "Двухместный с раскладным диваном";
+            type = "Двухместный с диваном";
         }
         
     }

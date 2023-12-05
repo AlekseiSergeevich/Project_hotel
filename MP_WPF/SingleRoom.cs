@@ -13,7 +13,6 @@ namespace ProjectMP
             price = 2500;
             numberOfPerson = 1;
             type = "Одноместный";
-        
         }
     }
     
