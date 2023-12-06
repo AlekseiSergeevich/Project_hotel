@@ -54,7 +54,7 @@
         <Grid x:Name="Hotel" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="412" VerticalAlignment="Top" Width="1335"/>
             <TextBox HorizontalAlignment="Left" Height="183" Margin="351,449,0,0" TextWrapping="Wrap" Background="RoyalBlue" Foreground="White" FontSize="25" Text="Зеленый - номер свободен&#xA;Красный - номер занят &#xA;Фиолетовый - номер забронирован&#xD;&#xA;Для дополнительной информации о занятости&#xD;&#xA;" VerticalAlignment="Top" Width="661" BorderBrush="{x:Null}" BorderThickness="0"/>
-            <Button x:Name ="StartSimulation" Content="Начать" FontSize="30" HorizontalAlignment="Left" Margin="1073,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="StartSimulationButtonClick"/>
+
 
         </Grid>
     </Grid>
