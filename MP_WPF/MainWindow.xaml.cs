@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace ProjectMP
 {
@@ -31,13 +33,14 @@ namespace ProjectMP
         bool firtsFigureQuantityOfDoubleRoom = true;
         bool firstFigureQuantityOfSingleRoomWithFoldingSofa = true;
         int quantityOfDaysOfSimulation;
+        int intervalBetweenAppearanceOfTwoApplications = new Random().Next(1,4);
         int quantityOfRooms;
         int quantityOfLuxe;
         int quantityOfJuniorSuite;
         int quantityOfSingleRoom;
         int quantityOfDoubleRoom;
         int quantityOfSingleRoomWithFoldingSofa;
-        Button[] buttons;
+        static Button[] buttons;
         List<HotelRoom> hotelRooms = new List<HotelRoom>();
         List<Booking> wholeInformationAboutBooking = new List<Booking>();
         public MainWindow()
@@ -144,7 +147,7 @@ namespace ProjectMP
                     buttons[i] = new Button();
                     buttons[i].Content = "Room №" + j.ToString();
                     buttons[i].Name = "Room" + j.ToString();
-                    buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
+                    buttons[i].Background = null; //new SolidColorBrush(Colors.LightGreen);
                     buttons[i].Click += RoomClick;
                     Hotel.Children.Add(buttons[i]);
                     buttons[i].Height = 70;
@@ -157,6 +160,7 @@ namespace ProjectMP
                     buttons[i].Margin = new Thickness(left, top, 0, down);
                     left += 250;
                 }
+
 
             }
 
@@ -275,7 +279,14 @@ namespace ProjectMP
                     break;
                 }
             }
-            roomInformation.ShowDialog();
+            roomInformation.ShowDialog();            
         }
+
+        private void StartSimulationButtonClick(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        
     }
 }
