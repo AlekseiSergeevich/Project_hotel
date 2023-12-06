@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ProjectMP
 {
-    public class RequestGenerator
+    public class RequestGenerator//ЗАМЕНИТЬ ДАТАТАЙМ НА ЧТО ТО ДРУГОЕ, ЧТОБЫ ВРЕМЯ ШЛО
     {
         BookingRequest bookingRequest;
         public BookingRequest Generator() //Дописать создание файла с заявками

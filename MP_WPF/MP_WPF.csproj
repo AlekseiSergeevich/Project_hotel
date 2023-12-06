@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bill.cs" />
     <Compile Include="Booking.cs" />
     <Compile Include="BookingConfirmation.cs" />
     <Compile Include="BookingDates.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="DoubleRoom.cs" />
     <Compile Include="DoubleRoomWithSofa.cs" />
     <Compile Include="RequestGenerator.cs" />
+    <Compile Include="RequestHandler.cs" />
     <Compile Include="RoomInformation.xaml.cs">
       <DependentUpon>RoomInformation.xaml</DependentUpon>
     </Compile>
