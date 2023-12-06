@@ -33,7 +33,6 @@ namespace ProjectMP
         bool firtsFigureQuantityOfDoubleRoom = true;
         bool firstFigureQuantityOfSingleRoomWithFoldingSofa = true;
         int quantityOfDaysOfSimulation;
-        int intervalBetweenAppearanceOfTwoApplications = new Random().Next(1,4);
         int quantityOfRooms;
         int quantityOfLuxe;
         int quantityOfJuniorSuite;
@@ -280,11 +279,6 @@ namespace ProjectMP
                 }
             }
             roomInformation.ShowDialog();            
-        }
-
-        private void StartSimulationButtonClick(object sender, RoutedEventArgs e)
-        {
-           
         }
 
         
