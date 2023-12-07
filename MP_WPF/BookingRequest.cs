@@ -11,7 +11,9 @@ namespace ProjectMP
         public string name;
         public DateTime startOfBooking;
         public DateTime endOfBooking;
+        public BookingDates bookingDates;
         public string telephoneNumber;
+        public DateTime timeOfReceiptOfApplication;
         public HotelRoom room;
     }
 }

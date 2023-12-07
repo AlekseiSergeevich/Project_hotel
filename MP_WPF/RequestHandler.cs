@@ -13,10 +13,19 @@ namespace MP_WPF
         public void RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list)
         {
             int number = FindFreeRoom(list, request);
-            if(number != -1)
+            if(number != -1) //заполняет лист данными из заявки, если есть номер соответствующий запросу покупателя
             {
-                list[number].room=request.room;
-                list[number].flagOfBusyness=true;// поменять эту ебалу(седлать даты нормально)
+                list[number].room=request.room;     
+                if(DateTime.Compare(request.startOfBooking, request.timeOfReceiptOfApplication) == 0)
+                {
+                    list[number].flagOfBusyness = true;
+                } 
+                else list[number].flagOfBooking = true;
+                list[number].bookings.Add(request.bookingDates);
+            }
+            else
+            {
+                //тут должна быть реализация предложения номера за 70% от его стоимости
             }
         }
         private int FindFreeRoom(List<Booking> list, BookingRequest request) // ищет свободный номер для гостя согласно его требованиям

@@ -7,20 +7,25 @@ using System.IO;
 
 namespace ProjectMP
 {
-    public class RequestGenerator//ЗАМЕНИТЬ ДАТАТАЙМ НА ЧТО ТО ДРУГОЕ, ЧТОБЫ ВРЕМЯ ШЛО
+    public class RequestGenerator//теперь в генератор передается интервал через который придет заявка и весь счет времени будет идти тут <=======3
     {
         BookingRequest bookingRequest;
-        public BookingRequest Generator() //Дописать создание файла с заявками
+        private DateTime date = DateTime.Now;
+        public BookingRequest Generator(int itervalBetweenAplications) //Дописать создание файла с заявками
         {
             Random rnd = new Random();
             bookingRequest = new BookingRequest();
             int count = File.ReadAllLines("Visiters.txt").Length;
             int finish = rnd.Next(0, count);
             bookingRequest.name = File.ReadLines("Visiters.txt").Skip(finish).First();
-            DateTime startData = DateTime.Now;
+            DateTime startData = date.AddHours(Convert.ToDouble(itervalBetweenAplications));
             startData.AddDays(rnd.Next(0, 4));
             DateTime endData = startData;
             endData.AddDays(rnd.Next(1, 3));
+            bookingRequest.bookingDates.startOfBooking=startData;
+            bookingRequest.bookingDates.endOfBooking=endData;
+            date = date.AddHours(Convert.ToDouble(itervalBetweenAplications));
+            bookingRequest.timeOfReceiptOfApplication = date;
             bookingRequest.startOfBooking = startData;
             bookingRequest.endOfBooking = endData;
             int num = rnd.Next(000, 999);
