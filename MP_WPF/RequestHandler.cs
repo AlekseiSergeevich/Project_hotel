@@ -111,7 +111,11 @@ namespace MP_WPF
         private bool DataManager(Booking booking, BookingRequest request) // определяет может ли гость заехать в ДАННЫЙ номер в даты, когда он хочет(будет ли номер свободен)
         {
             bool flag = false;
+<<<<<<< HEAD
             if (booking.bookings == null)
+=======
+            if(booking.bookings == null)
+>>>>>>> d7f4bb9e7b80d19cbddc04be2a21d5f484f21513
             {
                 return true;
             }
