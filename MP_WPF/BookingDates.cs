@@ -10,10 +10,10 @@ namespace ProjectMP
     {
         public DateTime startOfBooking;
         public DateTime endOfBooking;
-        public BookingDates(DateTime s, DateTime e)
+        public BookingDates()
         {
-            startOfBooking = s;
-            endOfBooking = e;
+            startOfBooking = DateTime.Now;
+            endOfBooking = DateTime.Now;
         }
     }
 }
