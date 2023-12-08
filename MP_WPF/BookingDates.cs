@@ -10,10 +10,14 @@ namespace ProjectMP
     {
         public DateTime startOfBooking;
         public DateTime endOfBooking;
-        public BookingDates(DateTime s, DateTime e)
+        public BookingDates()
         {
-            startOfBooking = s;
-            endOfBooking = e;
+            startOfBooking = DateTime.Now;
+            startOfBooking = DateTime.Now;
+        }
+        public override string ToString()
+        {
+            return (System.String.Format("Занят с: {0}  по: {1}", startOfBooking, startOfBooking));
         }
     }
 }

@@ -287,6 +287,7 @@ namespace ProjectMP
                 if (clickedButton.Name == str)
                 {
                     roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].room.ToString();
+                    roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToString();
                     break;
                 }
             }

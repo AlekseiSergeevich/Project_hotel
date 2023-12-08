@@ -19,8 +19,8 @@
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="47" Margin="153,175,0,0" TextWrapping="Wrap" FontSize="30" Text="Общее количество номеров" VerticalAlignment="Top" Width="468" BorderBrush="{x:Null}" BorderThickness="0"/>
             <Button x:Name ="Сontinue" Content="Продолжить" FontSize="30" HorizontalAlignment="Left" Margin="1049,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="СontinueButtonClick"/>
             <Button x:Name ="Back" Content="Назад" FontSize="30" HorizontalAlignment="Left" Margin="65,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="BackButtonClick"/>
-            <TextBox x:Name="TextBoxQuantityOfDaysOfSimulation" HorizontalAlignment="Left" ToolTip="Число от 12 до 30"  Height="25" Margin="621,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfDaysOfSimulation_PreviewTextInput"/>
-            <TextBox x:Name="TextBoxQuantityOfRooms" HorizontalAlignment="Left" ToolTip="Число от 20 до 30" Height="22" Margin="621,188,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfRooms_PreviewTextInput"/>
+            <TextBox x:Name="TextBoxQuantityOfDaysOfSimulation" MaxLength="2" HorizontalAlignment="Left" ToolTip="Число от 12 до 30"  Height="25" Margin="621,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfDaysOfSimulation_PreviewTextInput"/>
+            <TextBox x:Name="TextBoxQuantityOfRooms" MaxLength="2" HorizontalAlignment="Left" ToolTip="Число от 20 до 30" Height="22" Margin="621,188,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfRooms_PreviewTextInput"/>
         </Grid>
         <Grid x:Name="EmptyInput" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Background="RoyalBlue" Foreground="White" Height="74" Margin="330,358,0,0" TextWrapping="Wrap" FontSize="40" Text="&#x9;Заполните все поля" VerticalAlignment="Top" Width="711" BorderBrush="{x:Null}" BorderThickness="0"/>
@@ -41,11 +41,11 @@
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Height="94" Background="RoyalBlue" Foreground="White" Margin="177,501,0,0" TextWrapping="Wrap" FontSize="35" Text="Двухместный с раскладным диваном" VerticalAlignment="Top" Width="297" BorderBrush="{x:Null}" BorderThickness="0"/>
             <Button x:Name ="Сontinue2" Content="Продолжить" FontSize="30" HorizontalAlignment="Left" Margin="1049,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="Сontinue2ButtonClick"/>
             <Button x:Name ="Back2" Content="Назад" FontSize="30" HorizontalAlignment="Left" Margin="65,681,0,0" VerticalAlignment="Top" Width="207" Height="50" Click="Back2ButtonClick"/>
-            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfLuxe" Margin="530,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfLuxe_PreviewTextInput"/>
-            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfJuniorSuite" Margin="530,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="TextBoxQuantityOfJuniorSuite_PreviewTextInput" Width="120"/>
-            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfSingleRoom" Margin="530,351,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="TextBoxQuantityOfSingleRoom_PreviewTextInput" Width="120"/>
-            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfDoubleRoom" Margin="530,422,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="TextBoxQuantityOfDoubleRoom_PreviewTextInput" Width="120"/>
-            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfSingleRoomWithFoldingSofa" Margin="530,522,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfSingleRoomWithFoldingSofa_PreviewTextInput"/>
+            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfLuxe" MaxLength="2" Margin="530,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfLuxe_PreviewTextInput"/>
+            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfJuniorSuite" MaxLength="2" Margin="530,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="TextBoxQuantityOfJuniorSuite_PreviewTextInput" Width="120"/>
+            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfSingleRoom" MaxLength="2" Margin="530,351,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="TextBoxQuantityOfSingleRoom_PreviewTextInput" Width="120"/>
+            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfDoubleRoom" MaxLength="2" Margin="530,422,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="TextBoxQuantityOfDoubleRoom_PreviewTextInput" Width="120"/>
+            <TextBox HorizontalAlignment="Left" Height="23" x:Name="TextBoxQuantityOfSingleRoomWithFoldingSofa" MaxLength="2" Margin="530,522,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBoxQuantityOfSingleRoomWithFoldingSofa_PreviewTextInput"/>
         </Grid>
         <Grid x:Name="IncorrectSum" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <TextBox HorizontalAlignment="Left" IsReadOnly="True" Height="279" Background="RoyalBlue" Foreground="White" Margin="266,280,0,0" TextWrapping="Wrap" FontSize="40" Text="Сумма номеров каждого типа должна быть равна общему количеству номеров" VerticalAlignment="Top" Width="857" BorderBrush="{x:Null}" BorderThickness="0"/>
@@ -53,7 +53,7 @@
         </Grid>
         <Grid x:Name="Hotel" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="412" VerticalAlignment="Top" Width="1335"/>
-            <TextBox HorizontalAlignment="Left" Height="183" Margin="10,417,0,0" TextWrapping="Wrap" Background="RoyalBlue" Foreground="White" FontSize="25" Text="Зеленый - номер свободен&#xA;Красный - номер занят &#xA;Фиолетовый - номер забронирован&#xD;&#xA;Для дополнительной информации о занятости&#xD;&#xA;" VerticalAlignment="Top" Width="661" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <TextBox HorizontalAlignment="Left" Height="183" Margin="10,417,0,0" TextWrapping="Wrap" Background="RoyalBlue" Foreground="White" FontSize="25" Text="Зеленый - номер свободен&#xA;Красный - номер занят &#xA;Фиолетовый - номер забронирован&#xD;&#xA;Для дополнительной информации о занятости нажмите на соответствующую номеру кнопку&#xD;&#xA;" VerticalAlignment="Top" Width="661" BorderBrush="{x:Null}" BorderThickness="0"/>
             <TextBox x:Name ="QuantityOfRequest" HorizontalAlignment="Left" Height="39" Margin="1056,459,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192"/>
             <Button Content="Button" HorizontalAlignment="Left" Margin="1127,498,0,0" VerticalAlignment="Top" Width="121" Height="32" Click="ButtonClick"/>
 
