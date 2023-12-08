@@ -19,9 +19,6 @@ using System.Windows.Threading;
 
 namespace ProjectMP
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
 
@@ -46,20 +43,26 @@ namespace ProjectMP
         {
             InitializeComponent();
         }
+        #region Start
         private void StartButtonClick(object sender, RoutedEventArgs e)
         {
             SettingsSimulation.Visibility = Visibility.Visible;
             Main.Visibility = Visibility.Collapsed;
         }
+        #endregion
+        #region Reports
         private void ReportsButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("Reports");
         }
+        #endregion
+        #region Exit
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
+        #endregion
+        #region FirstPageOfSettings
         private void СontinueButtonClick(object sender, RoutedEventArgs e)
         {
             if (TextBoxQuantityOfDaysOfSimulation.Text == "" || TextBoxQuantityOfRooms.Text == "")
@@ -81,6 +84,8 @@ namespace ProjectMP
             }
 
         }
+        #endregion
+        #region BackToStart
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
             TextBoxQuantityOfDaysOfSimulation.Clear();
@@ -90,6 +95,8 @@ namespace ProjectMP
             SettingsSimulation.Visibility = Visibility.Collapsed;
             Main.Visibility = Visibility.Visible;
         }
+        #endregion
+        #region SecondPageOfSettings
         private void Сontinue2ButtonClick(object sender, RoutedEventArgs e)
         {
             quantityOfLuxe = int.Parse(TextBoxQuantityOfLuxe.Text);
@@ -146,7 +153,7 @@ namespace ProjectMP
                     buttons[i] = new Button();
                     buttons[i].Content = "Room №" + j.ToString();
                     buttons[i].Name = "Room" + j.ToString();
-                    buttons[i].Background = null; //new SolidColorBrush(Colors.LightGreen);
+                    buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
                     buttons[i].Click += RoomClick;
                     Hotel.Children.Add(buttons[i]);
                     buttons[i].Height = 70;
@@ -165,11 +172,15 @@ namespace ProjectMP
 
 
         }
+        #endregion
+        #region BackToFirstPageOfSettings
         private void Back2ButtonClick(object sender, RoutedEventArgs e)
         {
             SettingsSimulation.Visibility = Visibility.Visible;
             SettingsSimulation2.Visibility = Visibility.Collapsed;
         }
+        #endregion
+        #region CheckCorrectnessOfInputOnSecondPageOfSettings
         private void TextBoxQuantityOfDaysOfSimulation_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureForQuantityOfDaysOfSimulation))
@@ -247,7 +258,8 @@ namespace ProjectMP
                 firstFigureQuantityOfSingleRoomWithFoldingSofa = false;
             }
         }
-
+        #endregion
+        #region OKButtons
         private void OKButtonClick(object sender, RoutedEventArgs e)
         {
             SettingsSimulation.Visibility = Visibility.Visible;
@@ -264,7 +276,7 @@ namespace ProjectMP
             IncorrectSum.Visibility = Visibility.Collapsed;
             SettingsSimulation2.Visibility = Visibility.Visible;
         }
-
+        #endregion
         private void RoomClick(object sender, RoutedEventArgs e)
         {
             RoomInformation roomInformation = new RoomInformation();
@@ -280,7 +292,15 @@ namespace ProjectMP
             }
             roomInformation.ShowDialog();            
         }
+        private void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            RequestGenerator RG = new RequestGenerator();
+            RequestHandler RH = new RequestHandler();
+            for (int i = 0;i<int.Parse(QuantityOfRequest.Text);i++)
+            {
+                RH.RabotaNeWolkRabotaWork(RG.Generator(1), wholeInformationAboutBooking);
+            }
+        }
 
-        
     }
 }

@@ -53,7 +53,9 @@
         </Grid>
         <Grid x:Name="Hotel" Visibility="Collapsed" Background="RoyalBlue" Height="1000" Width="1335">
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="412" VerticalAlignment="Top" Width="1335"/>
-            <TextBox HorizontalAlignment="Left" Height="183" Margin="351,449,0,0" TextWrapping="Wrap" Background="RoyalBlue" Foreground="White" FontSize="25" Text="Зеленый - номер свободен&#xA;Красный - номер занят &#xA;Фиолетовый - номер забронирован&#xD;&#xA;Для дополнительной информации о занятости&#xD;&#xA;" VerticalAlignment="Top" Width="661" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <TextBox HorizontalAlignment="Left" Height="183" Margin="10,417,0,0" TextWrapping="Wrap" Background="RoyalBlue" Foreground="White" FontSize="25" Text="Зеленый - номер свободен&#xA;Красный - номер занят &#xA;Фиолетовый - номер забронирован&#xD;&#xA;Для дополнительной информации о занятости&#xD;&#xA;" VerticalAlignment="Top" Width="661" BorderBrush="{x:Null}" BorderThickness="0"/>
+            <TextBox x:Name ="QuantityOfRequest" HorizontalAlignment="Left" Height="39" Margin="1056,459,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="1127,498,0,0" VerticalAlignment="Top" Width="121" Height="32" Click="ButtonClick"/>
 
 
         </Grid>
