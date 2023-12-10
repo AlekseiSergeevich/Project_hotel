@@ -60,6 +60,7 @@
     <Compile Include="BookingConfirmation.cs" />
     <Compile Include="BookingDates.cs" />
     <Compile Include="BookingRequest.cs" />
+    <Compile Include="StatisticCounter.cs" />
     <Compile Include="DoubleRoom.cs" />
     <Compile Include="DoubleRoomWithSofa.cs" />
     <Compile Include="RequestGenerator.cs" />

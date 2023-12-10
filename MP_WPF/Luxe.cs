@@ -10,7 +10,7 @@ namespace ProjectMP
     {
         public Luxe()
         {
-            price = 4500;
+            price = 4900;
             numberOfPerson = 2;
             type = "Люкс";
         }

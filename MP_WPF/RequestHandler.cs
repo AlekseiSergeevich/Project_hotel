@@ -10,50 +10,74 @@ namespace MP_WPF //статистика заселения номеров, вы�
 {
     public class RequestHandler //обработчик заявок
     {
-        public void RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list)
+        public void RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list, StatisticCounter statistic)
         {
             int number = FindFreeRoom(list, request);
             if (number != -1) //заполняет лист данными из заявки, если есть номер соответствующий запросу покупателя
             {
                 EntersData(request, list, number);
+                statistic.AddToGlobalProfit(request.room);
             }
-            else //(альфа тест)создание второй заявки, но с другим номером, если не смогли найти подходящий номер
+            else //создание второй заявки, но с другим номером, если не смогли найти подходящий номер
             {
                 Random rnd = new Random();
                 int accept = rnd.Next(1, 3);
                 if (accept == 1)
                 {
-                    if (request.room is Luxe)
+                    BookingRequest secondTryToFind = new BookingRequest();
+                    if (request.room is Luxe)//100%
                     {
-                        BookingRequest secondTryToFind = new BookingRequest();
                         secondTryToFind = request;
                         secondTryToFind.room = new JuniorSuite();
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1) 
                         {
                             EntersData(secondTryToFind, list, number);
+                            statistic.AddToGlobalProfit(secondTryToFind.room);
                         }
                     }
-                    if (request.room is JuniorSuite)
+                    if (request.room is JuniorSuite)//70%
                     {
-                        BookingRequest secondTryToFind = new BookingRequest();
                         secondTryToFind = request;
                         secondTryToFind.room = new Luxe();
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number);//сделать скидку 70%
+                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
                         }
                     }
-                    if (request.room is SingleRoom)
+                    if (request.room is SingleRoom)//70%
                     {
-                        BookingRequest secondTryToFind = new BookingRequest();
                         secondTryToFind = request;
                         secondTryToFind.room = new JuniorSuite();
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number);
+                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
+                        }
+                    }
+                    if (request.room is DoubleRoom)//70%
+                    {
+                        secondTryToFind = request;
+                        secondTryToFind.room = new DoubleRoomWithSofa();
+                        number = FindFreeRoom(list, secondTryToFind);
+                        if (number != -1)
+                        {
+                            EntersData(secondTryToFind, list, number);
+                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
+                        }
+                    }
+                    if (request.room is DoubleRoomWithSofa)//70%
+                    {
+                        secondTryToFind = request;
+                        secondTryToFind.room = new DoubleRoom();
+                        number = FindFreeRoom(list, secondTryToFind);
+                        if (number != -1)
+                        {
+                            EntersData(secondTryToFind, list, number);
+                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
                         }
                     }
                 }
@@ -158,7 +182,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 return flag;
             }
         }
-        private void EntersData(BookingRequest request, List<Booking> list, int number)
+        private void EntersData(BookingRequest request, List<Booking> list, int number)// вводит данные о занятости номера в лист
         {
             if (DateTime.Compare(request.startOfBooking, request.timeOfReceiptOfApplication) == 0)
             {

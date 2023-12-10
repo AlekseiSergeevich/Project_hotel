@@ -10,7 +10,7 @@ namespace ProjectMP
     {
         public DoubleRoom()
         {
-            price = 2700;
+            price = 2400;
             numberOfPerson = 2;
             type = "Двухместный";
         }
