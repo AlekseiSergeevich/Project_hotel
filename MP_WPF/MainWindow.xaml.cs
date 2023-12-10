@@ -21,7 +21,7 @@ namespace ProjectMP
 {
     public partial class MainWindow : Window
     {
-
+        #region FlagsForCheckOfInput
         bool firstFigureForQuantityOfDaysOfSimulation = true;
         bool firtsFigureForTextBoxQuantityOfRooms = true;
         bool firstFigureQuantityOfLuxe = true;
@@ -29,127 +29,141 @@ namespace ProjectMP
         bool firstFigureQuantityOfSingleRoom = true;
         bool firtsFigureQuantityOfDoubleRoom = true;
         bool firstFigureQuantityOfSingleRoomWithFoldingSofa = true;
-        int quantityOfDaysOfSimulation;
+        int pageWithEmptyInput = 0;
+        bool firstFigureForQuantityOfRequests = true;
+        #endregion
+        #region InputData
+        int quantityOfDaysOfSimulation;        
         int quantityOfRooms;
         int quantityOfLuxe;
         int quantityOfJuniorSuite;
         int quantityOfSingleRoom;
         int quantityOfDoubleRoom;
         int quantityOfSingleRoomWithFoldingSofa;
-        static Button[] buttons;
-        List<HotelRoom> hotelRooms = new List<HotelRoom>();
+        #endregion
+        Button[] buttons;
         List<Booking> wholeInformationAboutBooking = new List<Booking>();
         RequestGenerator RG = new RequestGenerator();
         RequestHandler RH = new RequestHandler();
+        int pastTime = 0;
+        int intervalBetweenAppearanceOfTwoRequests;
+        DateTime dateInSimulation = DateTime.Now;
         public MainWindow()
         {
             InitializeComponent();
         }
-        #region Start
+        #region MainPage
         private void StartButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsSimulation.Visibility = Visibility.Visible;
-            Main.Visibility = Visibility.Collapsed;
+            SettingsSimulation1Grid.Visibility = Visibility.Visible;
+            MainGrid.Visibility = Visibility.Collapsed;
         }
-        #endregion
-        #region Reports
         private void ReportsButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("Reports");
         }
-        #endregion
-        #region Exit
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
         #endregion
         #region FirstPageOfSettings
-        private void СontinueButtonClick(object sender, RoutedEventArgs e)
+        private void FirstPageOfSettingsСontinueButtonClick(object sender, RoutedEventArgs e)
         {
-            if (TextBoxQuantityOfDaysOfSimulation.Text == "" || TextBoxQuantityOfRooms.Text == "")
+            if (string.IsNullOrWhiteSpace(QuantityOfDaysOfSimulationTextBox.Text) || string.IsNullOrWhiteSpace(QuantityOfRoomsTextBox.Text))
             {
-                SettingsSimulation.Visibility = Visibility.Collapsed;
-                EmptyInput.Visibility = Visibility.Visible;
+                SettingsSimulation1Grid.Visibility = Visibility.Collapsed;
+                EmptyInputGrid.Visibility = Visibility.Visible;
+                pageWithEmptyInput = 1;
             }
-            else if (int.Parse(TextBoxQuantityOfDaysOfSimulation.Text) > 30 || int.Parse(TextBoxQuantityOfRooms.Text) > 30 || int.Parse(TextBoxQuantityOfDaysOfSimulation.Text) < 12 || int.Parse(TextBoxQuantityOfRooms.Text) < 20)
+            else if (int.Parse(QuantityOfDaysOfSimulationTextBox.Text) > 30 || int.Parse(QuantityOfRoomsTextBox.Text) > 30 || int.Parse(QuantityOfDaysOfSimulationTextBox.Text) < 12 || int.Parse(QuantityOfRoomsTextBox.Text) < 20)
             {
-                SettingsSimulation.Visibility = Visibility.Collapsed;
-                IncorrectInput.Visibility = Visibility.Visible;
+                SettingsSimulation1Grid.Visibility = Visibility.Collapsed;
+                IncorrectInputGrid.Visibility = Visibility.Visible;
             }
             else
             {
-                SettingsSimulation2.Visibility = Visibility.Visible;
-                SettingsSimulation.Visibility = Visibility.Visible;
-                quantityOfDaysOfSimulation = int.Parse(TextBoxQuantityOfDaysOfSimulation.Text);
-                quantityOfRooms = int.Parse(TextBoxQuantityOfRooms.Text);
+                SettingsSimulation2Grid.Visibility = Visibility.Visible;
+                SettingsSimulation1Grid.Visibility = Visibility.Collapsed;
+                quantityOfDaysOfSimulation = int.Parse(QuantityOfDaysOfSimulationTextBox.Text);
+                quantityOfRooms = int.Parse(QuantityOfRoomsTextBox.Text);
             }
 
         }
-        #endregion
-        #region BackToStart
-        private void BackButtonClick(object sender, RoutedEventArgs e)
+        private void BackToStartButtonClick(object sender, RoutedEventArgs e)
         {
-            TextBoxQuantityOfDaysOfSimulation.Clear();
-            TextBoxQuantityOfRooms.Clear();
+            QuantityOfDaysOfSimulationTextBox.Clear();
+            QuantityOfRoomsTextBox.Clear();
+            QuantityOfLuxeTextBox.Clear();
+            QuantityOfJuniorSuiteTextBox.Clear();
+            QuantityOfSingleRoomTextBox.Clear();
+            QuantityOfDoubleRoomTextBox.Clear();
+            QuantityOfDoubleRoomWithFoldingSofaTextBox.Clear();
             firstFigureForQuantityOfDaysOfSimulation = true;
             firtsFigureForTextBoxQuantityOfRooms = true;
-            SettingsSimulation.Visibility = Visibility.Collapsed;
-            Main.Visibility = Visibility.Visible;
+            firstFigureQuantityOfLuxe = true;
+            firtsFigureQuantityOfJuniorSuites = true;
+            firstFigureQuantityOfSingleRoom = true;
+            firtsFigureQuantityOfDoubleRoom = true;
+            firstFigureQuantityOfSingleRoomWithFoldingSofa = true;
+            SettingsSimulation1Grid.Visibility = Visibility.Collapsed;
+            MainGrid.Visibility = Visibility.Visible;
         }
         #endregion
         #region SecondPageOfSettings
-        private void Сontinue2ButtonClick(object sender, RoutedEventArgs e)
+        private void SecondPageOfSettingsСontinueButtonClick(object sender, RoutedEventArgs e)
         {
-            quantityOfLuxe = int.Parse(TextBoxQuantityOfLuxe.Text);
-            quantityOfJuniorSuite = int.Parse(TextBoxQuantityOfJuniorSuite.Text);
-            quantityOfSingleRoom = int.Parse(TextBoxQuantityOfSingleRoom.Text);
-            quantityOfDoubleRoom = int.Parse(TextBoxQuantityOfDoubleRoom.Text);
-            quantityOfSingleRoomWithFoldingSofa = int.Parse(TextBoxQuantityOfSingleRoomWithFoldingSofa.Text);
-            if (quantityOfLuxe + quantityOfJuniorSuite + quantityOfSingleRoom + quantityOfDoubleRoom + quantityOfSingleRoomWithFoldingSofa != quantityOfRooms)
+
+            if (string.IsNullOrWhiteSpace(QuantityOfLuxeTextBox.Text) || string.IsNullOrWhiteSpace(QuantityOfJuniorSuiteTextBox.Text) || string.IsNullOrWhiteSpace(QuantityOfSingleRoomTextBox.Text) || string.IsNullOrWhiteSpace(QuantityOfDoubleRoomTextBox.Text) || string.IsNullOrWhiteSpace(QuantityOfDoubleRoomWithFoldingSofaTextBox.Text))
             {
-                SettingsSimulation2.Visibility = Visibility.Collapsed;
-                IncorrectSum.Visibility = Visibility.Visible;
+                SettingsSimulation2Grid.Visibility = Visibility.Collapsed;
+                EmptyInputGrid.Visibility = Visibility.Visible;
+                pageWithEmptyInput = 2;
+            }
+            else if (int.Parse(QuantityOfLuxeTextBox.Text) + int.Parse(QuantityOfJuniorSuiteTextBox.Text) + int.Parse(QuantityOfSingleRoomTextBox.Text) + int.Parse(QuantityOfSingleRoomTextBox.Text) + int.Parse(QuantityOfDoubleRoomWithFoldingSofaTextBox.Text) != quantityOfRooms)
+            {
+                SettingsSimulation2Grid.Visibility = Visibility.Collapsed;
+                IncorrectSumGrid.Visibility = Visibility.Visible;
             }
             else
             {
-                SettingsSimulation2.Visibility = Visibility.Collapsed;
-                Hotel.Visibility = Visibility.Visible;
+                SettingsSimulation2Grid.Visibility = Visibility.Collapsed;
+                HotelGrid.Visibility = Visibility.Visible;
+                quantityOfLuxe = int.Parse(QuantityOfLuxeTextBox.Text);
+                quantityOfJuniorSuite = int.Parse(QuantityOfJuniorSuiteTextBox.Text);
+                quantityOfSingleRoom = int.Parse(QuantityOfSingleRoomTextBox.Text);
+                quantityOfDoubleRoom = int.Parse(QuantityOfDoubleRoomTextBox.Text);
+                quantityOfSingleRoomWithFoldingSofa = int.Parse(QuantityOfDoubleRoomWithFoldingSofaTextBox.Text);
                 int numberOfRoom = 1;
                 for (int i = 0; i < quantityOfLuxe; i++)
                 {
-                    hotelRooms.Add(new Luxe());
-                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    wholeInformationAboutBooking.Add(new Booking(new Luxe(), false, false, numberOfRoom));
                     numberOfRoom++;
                 }
                 for (int i = 0; i < quantityOfJuniorSuite; i++)
                 {
-                    hotelRooms.Add(new JuniorSuite());
-                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    wholeInformationAboutBooking.Add(new Booking(new JuniorSuite(), false, false, numberOfRoom));
                     numberOfRoom++;
                 }
                 for (int i = 0; i < quantityOfSingleRoom; i++)
                 {
-                    hotelRooms.Add(new SingleRoom());
-                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    wholeInformationAboutBooking.Add(new Booking(new SingleRoom(), false, false, numberOfRoom));
                     numberOfRoom++;
                 }
                 for (int i = 0; i < quantityOfDoubleRoom; i++)
                 {
-                    hotelRooms.Add(new DoubleRoom());
-                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    wholeInformationAboutBooking.Add(new Booking(new DoubleRoom(), false, false, numberOfRoom));
                     numberOfRoom++;
                 }
                 for (int i = 0; i < quantityOfSingleRoomWithFoldingSofa; i++)
                 {
-                    hotelRooms.Add(new DoubleRoomWithSofa());
-                    wholeInformationAboutBooking.Add(new Booking(hotelRooms[numberOfRoom - 1], false, false, numberOfRoom));
+                    wholeInformationAboutBooking.Add(new Booking(new DoubleRoomWithSofa(), false, false, numberOfRoom));
                     numberOfRoom++;
                 }
-                buttons = new Button[quantityOfRooms];
                 int left = -1150;
                 int top = -800;
                 int down = 0;
+                buttons = new Button[quantityOfRooms];
                 for (int i = 0, j = 1; i < quantityOfRooms; i++, j++)
                 {
                     buttons[i] = new Button();
@@ -157,7 +171,7 @@ namespace ProjectMP
                     buttons[i].Name = "Room" + j.ToString();
                     buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
                     buttons[i].Click += RoomClick;
-                    Hotel.Children.Add(buttons[i]);
+                    HotelGrid.Children.Add(buttons[i]);
                     buttons[i].Height = 70;
                     buttons[i].Width = 70;
                     if (i % 10 == 0 && i != 0)
@@ -168,22 +182,17 @@ namespace ProjectMP
                     buttons[i].Margin = new Thickness(left, top, 0, down);
                     left += 250;
                 }
-
-
+                TimeSimulationTextBox.Text += DateTime.Now;
             }
-
-
         }
-        #endregion
-        #region BackToFirstPageOfSettings
-        private void Back2ButtonClick(object sender, RoutedEventArgs e)
+        private void BackToFirstPageOfSettingsButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsSimulation.Visibility = Visibility.Visible;
-            SettingsSimulation2.Visibility = Visibility.Collapsed;
+            SettingsSimulation2Grid.Visibility = Visibility.Collapsed;
+            SettingsSimulation1Grid.Visibility = Visibility.Visible;
         }
         #endregion
-        #region CheckCorrectnessOfInputOnSecondPageOfSettings
-        private void TextBoxQuantityOfDaysOfSimulation_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        #region CheckOfInputIntegersOnTextBoxesPagesOfSettings
+        private void QuantityOfDaysOfSimulationTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureForQuantityOfDaysOfSimulation))
             {
@@ -194,7 +203,7 @@ namespace ProjectMP
                 firstFigureForQuantityOfDaysOfSimulation = false;
             }
         }
-        private void TextBoxQuantityOfRooms_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void QuantityOfRoomsTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firtsFigureForTextBoxQuantityOfRooms))
             {
@@ -205,7 +214,7 @@ namespace ProjectMP
                 firtsFigureForTextBoxQuantityOfRooms = false;
             }
         }
-        private void TextBoxQuantityOfLuxe_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void QuantityOfLuxeTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfLuxe))
             {
@@ -216,7 +225,7 @@ namespace ProjectMP
                 firstFigureQuantityOfLuxe = false;
             }
         }
-        private void TextBoxQuantityOfJuniorSuite_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void QuantityOfJuniorSuiteTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firtsFigureQuantityOfJuniorSuites))
             {
@@ -227,7 +236,7 @@ namespace ProjectMP
                 firtsFigureQuantityOfJuniorSuites = false;
             }
         }
-        private void TextBoxQuantityOfSingleRoom_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void QuantityOfSingleRoomTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfSingleRoom))
             {
@@ -238,7 +247,7 @@ namespace ProjectMP
                 firstFigureQuantityOfSingleRoom = false;
             }
         }
-        private void TextBoxQuantityOfDoubleRoom_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void QuantityOfDoubleRoomTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firtsFigureQuantityOfDoubleRoom))
             {
@@ -249,7 +258,7 @@ namespace ProjectMP
                 firtsFigureQuantityOfDoubleRoom = false;
             }
         }
-        private void TextBoxQuantityOfSingleRoomWithFoldingSofa_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void QuantityOfSingleRoomWithFoldingSofaTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureQuantityOfSingleRoomWithFoldingSofa))
             {
@@ -260,23 +269,41 @@ namespace ProjectMP
                 firstFigureQuantityOfSingleRoomWithFoldingSofa = false;
             }
         }
+        private void QuantityOfRequestsTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) || (e.Text[0] == '0' && firstFigureForQuantityOfRequests))
+            {
+                e.Handled = true;
+            }
+            if (Char.IsDigit(e.Text, 0) && e.Text[0] != '0')
+            {
+                firstFigureForQuantityOfRequests = false;
+            }
+        }
         #endregion
         #region OKButtons
-        private void OKButtonClick(object sender, RoutedEventArgs e)
+        private void EmptyInputOnBothPageOfSettingsOKButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsSimulation.Visibility = Visibility.Visible;
-            EmptyInput.Visibility = Visibility.Collapsed;
+            EmptyInputGrid.Visibility = Visibility.Collapsed;
+            if (pageWithEmptyInput == 1)
+            {
+                SettingsSimulation1Grid.Visibility = Visibility.Visible;
+            }
+            if (pageWithEmptyInput == 2)
+            {
+                SettingsSimulation2Grid.Visibility = Visibility.Visible;
+            }
         }
-        private void OK2ButtonClick(object sender, RoutedEventArgs e)
+        private void IncorrectInputOnFirstPageOfSettingsOKButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsSimulation.Visibility = Visibility.Visible;
-            IncorrectInput.Visibility = Visibility.Collapsed;
+            SettingsSimulation1Grid.Visibility = Visibility.Visible;
+            IncorrectInputGrid.Visibility = Visibility.Collapsed;
         }
 
-        private void OK3ButtonClick(object sender, RoutedEventArgs e)
+        private void IncorrectInputOnSecondPageOfSettingsOKButtonClick(object sender, RoutedEventArgs e)
         {
-            IncorrectSum.Visibility = Visibility.Collapsed;
-            SettingsSimulation2.Visibility = Visibility.Visible;
+            IncorrectSumGrid.Visibility = Visibility.Collapsed;
+            SettingsSimulation2Grid.Visibility = Visibility.Visible;
         }
         #endregion
         private void RoomClick(object sender, RoutedEventArgs e)
@@ -289,19 +316,49 @@ namespace ProjectMP
                 if (clickedButton.Name == str)
                 {
                     roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].room.ToString();
-                    roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToString();
+                    //roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToString();
                     break;
                 }
             }
-            roomInformation.ShowDialog();            
+            roomInformation.ShowDialog();
         }
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void GeneratingRequestsButtonClick(object sender, RoutedEventArgs e)
         {
-            for (int i = 0;i<int.Parse(QuantityOfRequest.Text);i++)
+            if (string.IsNullOrWhiteSpace(QuantityOfRequestsTextBox.Text))
             {
-                RH.RabotaNeWolkRabotaWork(RG.Generator(1), wholeInformationAboutBooking);
+                return;
             }
-        }
+            for (int i = 0; i < int.Parse(QuantityOfRequestsTextBox.Text); i++)
+            {
+                intervalBetweenAppearanceOfTwoRequests = new Random().Next(1, 5);
+                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking);
+                pastTime += intervalBetweenAppearanceOfTwoRequests;
+                dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
+                if (pastTime >= quantityOfDaysOfSimulation*24)
+                {
+                    GeneratingRequestsButton.Visibility = Visibility.Collapsed;
+                    break;
+                }
+            }
+            TimeSimulationTextBox.Clear();
+            TimeSimulationTextBox.Text = dateInSimulation.ToString();
+            for (int i = 0; i < quantityOfRooms; i++)
+            {
+                if(wholeInformationAboutBooking[i].flagOfBooking == true)
+                {
+                    buttons[i].Background = new SolidColorBrush(Colors.Yellow);
+                }
+                if (wholeInformationAboutBooking[i].flagOfBusyness == true)
+                {
+                    buttons[i].Background = new SolidColorBrush(Colors.Orange);
+                }
+                if (wholeInformationAboutBooking[i].flagOfBusyness == true && wholeInformationAboutBooking[i].flagOfBooking == true)
+                {
+                    buttons[i].Background = new SolidColorBrush(Colors.Red);
+                }
 
+            }
+            //Добавить вывод о том, что симуляция завершена.
+        }
     }
 }

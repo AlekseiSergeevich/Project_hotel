@@ -13,7 +13,7 @@ namespace ProjectMP
         public BookingDates()
         {
             startOfBooking = DateTime.Now;
-            startOfBooking = DateTime.Now;
+            endOfBooking = DateTime.Now;
         }
         public override string ToString()
         {

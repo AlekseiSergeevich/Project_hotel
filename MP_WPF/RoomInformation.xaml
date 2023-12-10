@@ -8,7 +8,6 @@
         Icon="Hotel.ico"
         Title="RoomInformation" Height="250" Width="400">
     <Grid Background="RoyalBlue">
-        <TextBox x:Name="TextBox_InformationAboutRoom" HorizontalAlignment="Left" Height="186" Margin="36,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" Background="RoyalBlue" FontSize="25" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0"/>
-
+        <TextBox x:Name="TextBox_InformationAboutRoom" IsReadOnly="True" HorizontalAlignment="Left" Height="186" Margin="36,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" Background="RoyalBlue" FontSize="25" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0"/>
     </Grid>
 </Window>

@@ -14,6 +14,6 @@ namespace ProjectMP
             numberOfPerson = 2;
             type = "Двухместный";
         }
-        
+
     }
 }

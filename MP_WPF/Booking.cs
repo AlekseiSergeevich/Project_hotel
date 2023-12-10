@@ -13,9 +13,7 @@ namespace ProjectMP
         public bool flagOfBooking;
         public int roomNumber;
         public bool flagOfBusyness;
-
         public List<BookingDates> bookings = new List<BookingDates>(); //лист чтобы записывать даты, в которые этот номер будет забронирован
-
         public Booking(HotelRoom room, bool flagOfBusyness, bool flagOfBooking, int roomNumber)
         {
             this.room = room;
