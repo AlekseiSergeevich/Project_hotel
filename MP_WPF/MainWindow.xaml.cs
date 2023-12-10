@@ -39,6 +39,8 @@ namespace ProjectMP
         static Button[] buttons;
         List<HotelRoom> hotelRooms = new List<HotelRoom>();
         List<Booking> wholeInformationAboutBooking = new List<Booking>();
+        RequestGenerator RG = new RequestGenerator();
+        RequestHandler RH = new RequestHandler();
         public MainWindow()
         {
             InitializeComponent();
@@ -295,8 +297,6 @@ namespace ProjectMP
         }
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            RequestGenerator RG = new RequestGenerator();
-            RequestHandler RH = new RequestHandler();
             for (int i = 0;i<int.Parse(QuantityOfRequest.Text);i++)
             {
                 RH.RabotaNeWolkRabotaWork(RG.Generator(1), wholeInformationAboutBooking);
