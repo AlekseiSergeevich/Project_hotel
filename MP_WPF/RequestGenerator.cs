@@ -19,9 +19,9 @@ namespace ProjectMP
             int finish = rnd.Next(0, count);
             bookingRequest.name = File.ReadLines("Visiters.txt").Skip(finish).First();
             DateTime startData = date.AddHours(Convert.ToDouble(itervalBetweenAplications));
-            startData.AddDays(rnd.Next(0, 4));
+            startData = startData.AddDays(Convert.ToDouble(rnd.Next(0, 4)));
             DateTime endData = startData;
-            endData.AddDays(rnd.Next(1, 3));
+            endData = endData.AddDays(Convert.ToDouble(rnd.Next(1, 4)));
             bookingRequest.bookingDates.startOfBooking=startData;
             bookingRequest.bookingDates.endOfBooking=endData;
             date = date.AddHours(Convert.ToDouble(itervalBetweenAplications));
