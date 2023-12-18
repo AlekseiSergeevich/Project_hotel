@@ -13,7 +13,7 @@ namespace ProjectMP
         public string type;
         public override string ToString()
         {
-            return (System.String.Format("Тип номера: {0}  Стоимость: {1}", type, price));
+            return (System.String.Format("Тип номера: {0}\r\nСтоимость: {1}", type, price));
         }
     }
 }

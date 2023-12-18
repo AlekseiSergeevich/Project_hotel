@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:MP_WPF"
         mc:Ignorable="d"
         Icon="Hotel.ico"
-        Title="RoomInformation" Height="250" Width="400">
+        Title="RoomInformation" Height="350" Width="500">
     <Grid Background="RoyalBlue">
-        <TextBox x:Name="TextBox_InformationAboutRoom" IsReadOnly="True" HorizontalAlignment="Left" Height="186" Margin="36,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" Background="RoyalBlue" FontSize="25" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0"/>
+        <TextBox x:Name="TextBox_InformationAboutRoom" IsReadOnly="True" HorizontalAlignment="Left" Height="228" Margin="36,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="381" Background="RoyalBlue" FontSize="25" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0"/>
     </Grid>
 </Window>

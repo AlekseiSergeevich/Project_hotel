@@ -33,7 +33,7 @@ namespace ProjectMP
         bool firstFigureForQuantityOfRequests = true;
         #endregion
         #region InputData
-        int quantityOfDaysOfSimulation;        
+        int quantityOfDaysOfSimulation;
         int quantityOfRooms;
         int quantityOfLuxe;
         int quantityOfJuniorSuite;
@@ -43,6 +43,7 @@ namespace ProjectMP
         #endregion
         Button[] buttons;
         List<Booking> wholeInformationAboutBooking = new List<Booking>();
+        StatisticCounter statisticCounter = new StatisticCounter();
         RequestGenerator RG = new RequestGenerator();
         RequestHandler RH = new RequestHandler();
         int pastTime = 0;
@@ -315,12 +316,36 @@ namespace ProjectMP
                 string str = "Room" + i.ToString();
                 if (clickedButton.Name == str)
                 {
-                    roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].room.ToString();
-                    //roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToString();
-                    break;
+                    roomInformation.TextBox_InformationAboutRoom.Text += "№" + i + "\r\n";
+                    roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].room.ToString() + "\r\n";
+                    if (wholeInformationAboutBooking[i - 1].flagOfBooking && wholeInformationAboutBooking[i - 1].flagOfBusyness)
+                    {
+                        if(wholeInformationAboutBooking[i - 1].bookings.Last().typeOfBusyness)
+                        {
+                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBusyness() + "\r\n";
+                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[wholeInformationAboutBooking[i - 1].bookings.Count-2].ToStringBooking();
+                        }
+                        else
+                        {
+                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBooking() + "\r\n";
+                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[wholeInformationAboutBooking[i - 1].bookings.Count - 2].ToStringBusyness();
+                        }
+                        break;
+                    }
+                    if (wholeInformationAboutBooking[i - 1].flagOfBooking)
+                    {
+                        roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBooking();
+                        break;
+                    }
+                    if (wholeInformationAboutBooking[i - 1].flagOfBusyness)
+                    {
+                        roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBusyness();
+                        break;
+                    }
                 }
             }
             roomInformation.ShowDialog();
+            //roomInformation.TextBox_InformationAboutRoom.Clear();
         }
         private void GeneratingRequestsButtonClick(object sender, RoutedEventArgs e)
         {
@@ -331,12 +356,18 @@ namespace ProjectMP
             for (int i = 0; i < int.Parse(QuantityOfRequestsTextBox.Text); i++)
             {
                 intervalBetweenAppearanceOfTwoRequests = new Random().Next(1, 5);
-                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking);
+                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter);
                 pastTime += intervalBetweenAppearanceOfTwoRequests;
                 dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
-                if (pastTime >= quantityOfDaysOfSimulation*24)
+                ChangeOfFlags();
+                if (pastTime >= quantityOfDaysOfSimulation * 24)
                 {
+                    HotelGrid.Visibility = Visibility.Collapsed;
                     GeneratingRequestsButton.Visibility = Visibility.Collapsed;
+                    QuantityOfRequestsTextBox.Visibility = Visibility.Collapsed;
+                    PutQuantityOfRequestTextBox.Visibility = Visibility.Collapsed;
+                    ShowReportButton.Visibility = Visibility.Visible;
+                    EndOfSimulationGrid.Visibility = Visibility.Visible;
                     break;
                 }
             }
@@ -344,21 +375,56 @@ namespace ProjectMP
             TimeSimulationTextBox.Text = dateInSimulation.ToString();
             for (int i = 0; i < quantityOfRooms; i++)
             {
-                if(wholeInformationAboutBooking[i].flagOfBooking == true)
+                if (wholeInformationAboutBooking[i].flagOfBooking)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Yellow);
                 }
-                if (wholeInformationAboutBooking[i].flagOfBusyness == true)
+                if (wholeInformationAboutBooking[i].flagOfBusyness)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Orange);
                 }
-                if (wholeInformationAboutBooking[i].flagOfBusyness == true && wholeInformationAboutBooking[i].flagOfBooking == true)
+                if (wholeInformationAboutBooking[i].flagOfBusyness && wholeInformationAboutBooking[i].flagOfBooking)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Red);
                 }
 
             }
-            //Добавить вывод о том, что симуляция завершена.
         }
+        private void BackToHotelButtonClick(object sender, RoutedEventArgs e)
+        {
+            EndOfSimulationGrid.Visibility = Visibility.Collapsed;
+            HotelGrid.Visibility = Visibility.Visible;
+        }
+        private void ShowReportButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowReportImmediatelyButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ChangeOfFlags()//доделать этот ужас
+        {
+            for(int i =0;i<quantityOfRooms;i++)
+            {
+                if(wholeInformationAboutBooking[i].flagOfBooking)
+                {
+                    if(dateInSimulation >= wholeInformationAboutBooking[i].bookings.Last().startOfBooking)
+                    {
+                        wholeInformationAboutBooking[i].flagOfBooking = false;
+                        wholeInformationAboutBooking[i].flagOfBusyness = true;
+                    }
+                }
+                if(wholeInformationAboutBooking[i].flagOfBusyness)
+                {
+                    if (dateInSimulation >= wholeInformationAboutBooking[i].bookings.Last().endOfBooking)
+                    {
+                        wholeInformationAboutBooking[i].flagOfBusyness = false;
+                    }
+                }
+            }
+        }
+
     }
 }

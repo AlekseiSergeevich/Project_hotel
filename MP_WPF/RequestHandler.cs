@@ -184,12 +184,16 @@ namespace MP_WPF //статистика заселения номеров, вы�
         }
         private void EntersData(BookingRequest request, List<Booking> list, int number)// вводит данные о занятости номера в лист
         {
+            list[number].bookings.Add(request.bookingDates);
             if (DateTime.Compare(request.startOfBooking, request.timeOfReceiptOfApplication) == 0)
             {
                 list[number].flagOfBusyness = true;
+                list[number].bookings[list[number].bookings.Count - 1].typeOfBusyness = true;
             }
-            else list[number].flagOfBooking = true;
-            list[number].bookings.Add(request.bookingDates);
+            else
+            {
+                list[number].flagOfBooking = true;
+            }
         }
     }
 }
