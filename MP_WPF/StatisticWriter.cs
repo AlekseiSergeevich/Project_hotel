@@ -55,6 +55,7 @@ namespace MP_WPF
             writer.WriteLine($"Всего было обработано {counter.roomStatistic.Count} заявок.");
             writer.WriteLine($"Всего отель заработал {Math.Round(counter.globalprofit, 2)} рублей за указанный период.");
             writer.WriteLine();
+            writer.Close();
         }
     }
 }

@@ -46,6 +46,9 @@ namespace ProjectMP
         StatisticCounter statisticCounter = new StatisticCounter();
         RequestGenerator RG = new RequestGenerator();
         RequestHandler RH = new RequestHandler();
+        List<BookingRequest> BookingRequestsList = new List<BookingRequest>();
+        Bill Bill = new Bill();
+        StatisticWriter SW = new StatisticWriter();
         int pastTime = 0;
         int intervalBetweenAppearanceOfTwoRequests;
         DateTime dateInSimulation = DateTime.Now;
@@ -318,31 +321,19 @@ namespace ProjectMP
                 {
                     roomInformation.TextBox_InformationAboutRoom.Text += "№" + i + "\r\n";
                     roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].room.ToString() + "\r\n";
-                    if (wholeInformationAboutBooking[i - 1].flagOfBooking && wholeInformationAboutBooking[i - 1].flagOfBusyness)
+                    if(wholeInformationAboutBooking[i-1].bookings.Count!=0)
                     {
-                        if(wholeInformationAboutBooking[i - 1].bookings.Last().typeOfBusyness)
+                        for (int j = 0; j < wholeInformationAboutBooking[i - 1].bookings.Count; j++)
                         {
-                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBusyness()+"\r\n";
-                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[wholeInformationAboutBooking[i - 1].bookings.Count-2].ToStringBooking();
-                            break;
+                            if(dateInSimulation >= wholeInformationAboutBooking[i - 1].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].endOfBooking)
+                            {
+                                roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[j].ToStringBusyness() + "\r\n";
+                            }
+                            if (dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].startOfBooking)
+                            {
+                                roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[j].ToStringBooking() + "\r\n";
+                            }
                         }
-                        else
-                        {
-                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBooking() + "\r\n";
-                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[wholeInformationAboutBooking[i - 1].bookings.Count - 2].ToStringBusyness();
-                            break;
-                        }
-                        
-                    }
-                    if (wholeInformationAboutBooking[i - 1].flagOfBooking)
-                    {
-                        roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBooking();
-                        break;
-                    }
-                    if (wholeInformationAboutBooking[i - 1].flagOfBusyness)
-                    {
-                        roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBusyness();
-                        break;
                     }
                 }
             }
@@ -357,9 +348,18 @@ namespace ProjectMP
             for (int i = 0; i < int.Parse(QuantityOfRequestsTextBox.Text); i++)
             {
                 intervalBetweenAppearanceOfTwoRequests = new Random().Next(1, 5);
-                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter);
+                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter, BookingRequestsList);
                 pastTime += intervalBetweenAppearanceOfTwoRequests;
                 dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
+                //проверь это чтобы все работало корректно
+                for (int j = 0; j < BookingRequestsList.Count; j++)
+                {
+                    if (BookingRequestsList[j] != null && dateInSimulation.Day >= BookingRequestsList[j].endOfBooking.Day)
+                    {
+                        Bill.SendBill(BookingRequestsList[j]);
+                        BookingRequestsList[j] = null;
+                    }
+                }
                 ChangeOfFlags();
                 if (pastTime >= quantityOfDaysOfSimulation * 24)
                 {
@@ -376,6 +376,10 @@ namespace ProjectMP
             TimeSimulationTextBox.Text = dateInSimulation.ToString();
             for (int i = 0; i < quantityOfRooms; i++)
             {
+                if(!wholeInformationAboutBooking[i].flagOfBooking && !wholeInformationAboutBooking[i].flagOfBusyness)
+                {
+                    buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
+                }
                 if (wholeInformationAboutBooking[i].flagOfBooking)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Yellow);
@@ -404,38 +408,49 @@ namespace ProjectMP
         {
 
         }
-        private void ChangeOfFlags()//доделать этот ужас
+        private void ChangeOfFlags()
         {
+            
             for(int i =0;i<quantityOfRooms;i++)
             {
-                if(wholeInformationAboutBooking[i].bookings.Count>0)
+                bool checkBusy = false;
+                bool checkBooking = false;
+                if (wholeInformationAboutBooking[i].bookings.Count != 0)
                 {
-                    for(int j = 0;j< wholeInformationAboutBooking[i].bookings.Count;j++)
+                    for (int j = 0; j < wholeInformationAboutBooking[i].bookings.Count; j++)
                     {
-                        if(!wholeInformationAboutBooking[i].bookings[j].typeOfBusyness)
+                        if(dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i].bookings[j].endOfBooking)
                         {
-                            if(dateInSimulation>= wholeInformationAboutBooking[i].bookings[j].startOfBooking)
-                            {
-                                wholeInformationAboutBooking[i].flagOfBooking = false;
-                                wholeInformationAboutBooking[i].flagOfBusyness = true;
-                            }
-                            if(j + 1 != wholeInformationAboutBooking[i].bookings.Count)
-                            {
-                                if (!wholeInformationAboutBooking[i].bookings[j + 1].typeOfBusyness)
-                                {
-                                    wholeInformationAboutBooking[i].flagOfBooking = true;
-                                }
-                            }
+                            checkBusy = true;
                         }
-                        else
+                        if(dateInSimulation < wholeInformationAboutBooking[i].bookings[j].startOfBooking)
                         {
-                            if (dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].endOfBooking)
-                            {
-                                wholeInformationAboutBooking[i].flagOfBusyness = false;
-                            }
+                            checkBooking = true;
                         }
+                               
                     }
                 }
+                if (checkBusy && checkBooking)
+                {
+                    wholeInformationAboutBooking[i].flagOfBusyness = true;
+                    wholeInformationAboutBooking[i].flagOfBooking = true;
+                }
+                if(checkBusy && !checkBooking)
+                {
+                    wholeInformationAboutBooking[i].flagOfBusyness = true;
+                    wholeInformationAboutBooking[i].flagOfBooking = false;
+                }
+                if (!checkBusy && checkBooking)
+                {
+                    wholeInformationAboutBooking[i].flagOfBusyness = false;
+                    wholeInformationAboutBooking[i].flagOfBooking = true;
+                }
+                if(!checkBusy && !checkBooking)
+                {
+                    wholeInformationAboutBooking[i].flagOfBusyness = false;
+                    wholeInformationAboutBooking[i].flagOfBooking = false;
+                }
+
             }
         }
 

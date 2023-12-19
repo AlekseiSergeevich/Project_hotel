@@ -10,12 +10,15 @@ namespace MP_WPF //статистика заселения номеров, вы�
 {
     public class RequestHandler //обработчик заявок
     {
-        public void RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list, StatisticCounter statistic)
+        BookingConfirmation confirmation = new BookingConfirmation();
+        RequestWriter requestWriter = new RequestWriter();
+        public void RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list, StatisticCounter statistic, List<BookingRequest> BookingRequestslist)
         {
             int number = FindFreeRoom(list, request);
+            requestWriter.WriteRequest(request);
             if (number != -1) //заполняет лист данными из заявки, если есть номер соответствующий запросу покупателя
             {
-                EntersData(request, list, number);
+                EntersData(request, list, number, BookingRequestslist);
                 statistic.AddToGlobalProfit(request.room);
             }
             else //создание второй заявки, но с другим номером, если не смогли найти подходящий номер
@@ -32,7 +35,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
-                            EntersData(secondTryToFind, list, number);
+                            EntersData(secondTryToFind, list, number, BookingRequestslist);
                             statistic.AddToGlobalProfit(secondTryToFind.room);
                         }
                     }
@@ -43,7 +46,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
-                            EntersData(secondTryToFind, list, number);//сделать скидку 70%
+                            EntersData(secondTryToFind, list, number, BookingRequestslist);//сделать скидку 70%
                             statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
                         }
                     }
@@ -54,7 +57,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
-                            EntersData(secondTryToFind, list, number);
+                            EntersData(secondTryToFind, list, number, BookingRequestslist);
                             statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
                         }
                     }
@@ -65,7 +68,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
-                            EntersData(secondTryToFind, list, number);
+                            EntersData(secondTryToFind, list, number, BookingRequestslist);
                             statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
                         }
                     }
@@ -76,7 +79,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
-                            EntersData(secondTryToFind, list, number);
+                            EntersData(secondTryToFind, list, number, BookingRequestslist);
                             statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
                         }
                     }
@@ -92,7 +95,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is Luxe)
                     {
-                        bool check = DataManager(list[i], request);
+                        bool check = DateManager(list[i], request);
                         if (check == true)
                         {
                             flag = i;
@@ -107,7 +110,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is JuniorSuite)
                     {
-                        bool check = DataManager(list[i], request);
+                        bool check = DateManager(list[i], request);
                         if (check == true)
                         {
                             flag = i;
@@ -122,7 +125,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is SingleRoom)
                     {
-                        bool check = DataManager(list[i], request);
+                        bool check = DateManager(list[i], request);
                         if (check == true)
                         {
                             flag = i;
@@ -137,7 +140,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is DoubleRoom)
                     {
-                        bool check = DataManager(list[i], request);
+                        bool check = DateManager(list[i], request);
                         if (check == true)
                         {
                             flag = i;
@@ -152,7 +155,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is DoubleRoomWithSofa)
                     {
-                        bool check = DataManager(list[i], request);
+                        bool check = DateManager(list[i], request);
                         if (check == true)
                         {
                             flag = i;
@@ -163,7 +166,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
             }
             return flag;
         }
-        private bool DataManager(Booking booking, BookingRequest request) // определяет можнт ли гость заехать в ДАННЫЙ номер в даты, когда он хочет(будет ли номер свободен)
+        private bool DateManager(Booking booking, BookingRequest request) // определяет можнт ли гость заехать в ДАННЫЙ номер в даты, когда он хочет(будет ли номер свободен)
         {
             bool flag = false;
             if (booking.bookings.Count == 0)
@@ -180,20 +183,18 @@ namespace MP_WPF //статистика заселения номеров, вы�
                     }
                     else
                     {
-<<<<<<< HEAD
                         flag = false;
-=======
-                        flag=false;
->>>>>>> 49af2dcc1f4231e19af803d056de1afc6065ed6b
                         break;
                     }
                 }
                 return flag;
             }
         }
-        private void EntersData(BookingRequest request, List<Booking> list, int number)// вводит данные о занятости номера в лист
+        private void EntersData(BookingRequest request, List<Booking> list, int number, List<BookingRequest> BookingRequestsList)// вводит данные о занятости номера в лист
         {
             list[number].bookings.Add(request.bookingDates);
+            confirmation.SendConfirmation(request);
+            BookingRequestsList.Add(request);
             if (DateTime.Compare(request.startOfBooking, request.timeOfReceiptOfApplication) == 0)
             {
                 list[number].flagOfBusyness = true;

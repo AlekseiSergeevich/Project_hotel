@@ -15,6 +15,4 @@ namespace ProjectMP
             type = "Одноместный";
         }
     }
-
-
 }

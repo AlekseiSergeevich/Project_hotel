@@ -11,9 +11,9 @@ namespace ProjectMP
     {
         BookingRequest bookingRequest;
         private DateTime date = DateTime.Now;
+        Random rnd = new Random();
         public BookingRequest Generator(int itervalBetweenAplications) //Дописать создание файла с заявками
         {
-            Random rnd = new Random();
             bookingRequest = new BookingRequest();
             int count = File.ReadAllLines("Visiters.txt").Length;
             int finish = rnd.Next(0, count);
