@@ -33,7 +33,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                         secondTryToFind = request;
                         secondTryToFind.room = new JuniorSuite();
                         number = FindFreeRoom(list, secondTryToFind);
-                        if (number != -1) 
+                        if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number, BookingRequestslist);
                             statistic.AddToGlobalProfit(secondTryToFind.room);

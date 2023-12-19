@@ -325,15 +325,17 @@ namespace ProjectMP
                     {
                         if(wholeInformationAboutBooking[i - 1].bookings.Last().typeOfBusyness)
                         {
-                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBusyness() + "\r\n";
+                            roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBusyness()+"\r\n";
                             roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[wholeInformationAboutBooking[i - 1].bookings.Count-2].ToStringBooking();
+                            break;
                         }
                         else
                         {
                             roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings.Last().ToStringBooking() + "\r\n";
                             roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[wholeInformationAboutBooking[i - 1].bookings.Count - 2].ToStringBusyness();
+                            break;
                         }
-                        break;
+                        
                     }
                     if (wholeInformationAboutBooking[i - 1].flagOfBooking)
                     {
@@ -348,7 +350,6 @@ namespace ProjectMP
                 }
             }
             roomInformation.ShowDialog();
-            //roomInformation.TextBox_InformationAboutRoom.Clear();
         }
         private void GeneratingRequestsButtonClick(object sender, RoutedEventArgs e)
         {
@@ -411,7 +412,6 @@ namespace ProjectMP
         {
 
         }
-
         private void ShowReportImmediatelyButtonClick(object sender, RoutedEventArgs e)
         {
 
@@ -420,19 +420,32 @@ namespace ProjectMP
         {
             for(int i =0;i<quantityOfRooms;i++)
             {
-                if(wholeInformationAboutBooking[i].flagOfBooking)
+                if(wholeInformationAboutBooking[i].bookings.Count>0)
                 {
-                    if(dateInSimulation >= wholeInformationAboutBooking[i].bookings.Last().startOfBooking)
+                    for(int j = 0;j< wholeInformationAboutBooking[i].bookings.Count;j++)
                     {
-                        wholeInformationAboutBooking[i].flagOfBooking = false;
-                        wholeInformationAboutBooking[i].flagOfBusyness = true;
-                    }
-                }
-                if(wholeInformationAboutBooking[i].flagOfBusyness)
-                {
-                    if (dateInSimulation >= wholeInformationAboutBooking[i].bookings.Last().endOfBooking)
-                    {
-                        wholeInformationAboutBooking[i].flagOfBusyness = false;
+                        if(!wholeInformationAboutBooking[i].bookings[j].typeOfBusyness)
+                        {
+                            if(dateInSimulation>= wholeInformationAboutBooking[i].bookings[j].startOfBooking)
+                            {
+                                wholeInformationAboutBooking[i].flagOfBooking = false;
+                                wholeInformationAboutBooking[i].flagOfBusyness = true;
+                            }
+                            if(j + 1 != wholeInformationAboutBooking[i].bookings.Count)
+                            {
+                                if (!wholeInformationAboutBooking[i].bookings[j + 1].typeOfBusyness)
+                                {
+                                    wholeInformationAboutBooking[i].flagOfBooking = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].endOfBooking)
+                            {
+                                wholeInformationAboutBooking[i].flagOfBusyness = false;
+                            }
+                        }
                     }
                 }
             }
