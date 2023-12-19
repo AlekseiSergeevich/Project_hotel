@@ -11,15 +11,16 @@ namespace MP_WPF
     public class Bill //счет
     {
         private string fileName = "Bill.txt";
-        public void SendBill(BookingRequest booking)
+        public void SendBill(BookingRequest request)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
-            writer.WriteLine($"Здравствуйте, {booking.name}!");
-            writer.WriteLine($"Вы прибывали в отеле с {booking.startOfBooking} по {booking.endOfBooking}. Мы надеемся, что вам все понравилось!");
-            writer.WriteLine($"Сумма вашего счета составляет {(booking.endOfBooking - booking.startOfBooking).Days}");
+            writer.WriteLine($"Здравствуйте, {request.name}!");
+            writer.WriteLine($"Вы прибывали в отеле с {request.startOfBooking} по {request.endOfBooking}. Мы надеемся, что вам все понравилось!");
+            writer.WriteLine($"Сумма вашего счета составляет {request.room.price}");
             writer.WriteLine("Всего хорошего,");
             writer.WriteLine("Администрация отеля.");
             writer.WriteLine();
+            writer.Close();
         }
     }
 }

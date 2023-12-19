@@ -20,6 +20,7 @@ namespace ProjectMP //исправить заявку(добавить тип н
             writer.WriteLine("Спасибо, что выбрали наш отель!");
             writer.WriteLine("По всем вопросам обращаться по телефону +79108107589");
             writer.WriteLine();
+            writer.Close();
         }
     }
 }

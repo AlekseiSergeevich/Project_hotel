@@ -46,6 +46,9 @@ namespace ProjectMP
         StatisticCounter statisticCounter = new StatisticCounter();
         RequestGenerator RG = new RequestGenerator();
         RequestHandler RH = new RequestHandler();
+        List<BookingRequest> BookingRequestsList = new List<BookingRequest>();
+        Bill Bill = new Bill();
+        StatisticWriter SW = new StatisticWriter();
         int pastTime = 0;
         int intervalBetweenAppearanceOfTwoRequests;
         DateTime dateInSimulation = DateTime.Now;
@@ -356,11 +359,20 @@ namespace ProjectMP
             for (int i = 0; i < int.Parse(QuantityOfRequestsTextBox.Text); i++)
             {
                 intervalBetweenAppearanceOfTwoRequests = new Random().Next(1, 5);
-                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter);
+                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter, BookingRequestsList);
                 pastTime += intervalBetweenAppearanceOfTwoRequests;
                 dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
+                //проверь это чтобы все работало корректно
+                for(int j=0; j < BookingRequestsList.Count; j++)
+                {
+                    if (BookingRequestsList[j] != null && dateInSimulation.Day >= BookingRequestsList[j].endOfBooking.Day)
+                    {
+                        Bill.SendBill(BookingRequestsList[j]);
+                        BookingRequestsList[j] = null;
+                    }
+                }
                 ChangeOfFlags();
-                if (pastTime >= quantityOfDaysOfSimulation * 24)
+                if (pastTime >= quantityOfDaysOfSimulation * 24)//сюда запихнуть метод вывода статистики????
                 {
                     HotelGrid.Visibility = Visibility.Collapsed;
                     GeneratingRequestsButton.Visibility = Visibility.Collapsed;

@@ -12,7 +12,6 @@ namespace MP_WPF
     {
         public double globalprofit;
         public List<HotelRoom> roomStatistic = new List<HotelRoom>();
-        private string fileName = "Statistic.txt";
         public StatisticCounter()
         {
             globalprofit = 0;
