@@ -321,11 +321,11 @@ namespace ProjectMP
                 {
                     roomInformation.TextBox_InformationAboutRoom.Text += "№" + i + "\r\n";
                     roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].room.ToString() + "\r\n";
-                    if(wholeInformationAboutBooking[i-1].bookings.Count!=0)
+                    if (wholeInformationAboutBooking[i - 1].bookings.Count != 0)
                     {
                         for (int j = 0; j < wholeInformationAboutBooking[i - 1].bookings.Count; j++)
                         {
-                            if(dateInSimulation >= wholeInformationAboutBooking[i - 1].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].endOfBooking)
+                            if (dateInSimulation >= wholeInformationAboutBooking[i - 1].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].endOfBooking)
                             {
                                 roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[j].ToStringBusyness() + "\r\n";
                             }
@@ -376,7 +376,7 @@ namespace ProjectMP
             TimeSimulationTextBox.Text = dateInSimulation.ToString();
             for (int i = 0; i < quantityOfRooms; i++)
             {
-                if(!wholeInformationAboutBooking[i].flagOfBooking && !wholeInformationAboutBooking[i].flagOfBusyness)
+                if (!wholeInformationAboutBooking[i].flagOfBooking && !wholeInformationAboutBooking[i].flagOfBusyness)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
                 }
@@ -410,8 +410,8 @@ namespace ProjectMP
         }
         private void ChangeOfFlags()
         {
-            
-            for(int i =0;i<quantityOfRooms;i++)
+
+            for (int i = 0; i < quantityOfRooms; i++)
             {
                 bool checkBusy = false;
                 bool checkBooking = false;
@@ -419,15 +419,15 @@ namespace ProjectMP
                 {
                     for (int j = 0; j < wholeInformationAboutBooking[i].bookings.Count; j++)
                     {
-                        if(dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i].bookings[j].endOfBooking)
+                        if (dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i].bookings[j].endOfBooking)
                         {
                             checkBusy = true;
                         }
-                        if(dateInSimulation < wholeInformationAboutBooking[i].bookings[j].startOfBooking)
+                        if (dateInSimulation < wholeInformationAboutBooking[i].bookings[j].startOfBooking)
                         {
                             checkBooking = true;
                         }
-                               
+
                     }
                 }
                 if (checkBusy && checkBooking)
@@ -435,7 +435,7 @@ namespace ProjectMP
                     wholeInformationAboutBooking[i].flagOfBusyness = true;
                     wholeInformationAboutBooking[i].flagOfBooking = true;
                 }
-                if(checkBusy && !checkBooking)
+                if (checkBusy && !checkBooking)
                 {
                     wholeInformationAboutBooking[i].flagOfBusyness = true;
                     wholeInformationAboutBooking[i].flagOfBooking = false;
@@ -445,7 +445,7 @@ namespace ProjectMP
                     wholeInformationAboutBooking[i].flagOfBusyness = false;
                     wholeInformationAboutBooking[i].flagOfBooking = true;
                 }
-                if(!checkBusy && !checkBooking)
+                if (!checkBusy && !checkBooking)
                 {
                     wholeInformationAboutBooking[i].flagOfBusyness = false;
                     wholeInformationAboutBooking[i].flagOfBooking = false;
