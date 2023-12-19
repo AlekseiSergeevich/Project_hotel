@@ -69,6 +69,7 @@
       <DependentUpon>RoomInformation.xaml</DependentUpon>
     </Compile>
     <Compile Include="SingleRoom.cs" />
+    <Compile Include="StatisticWriter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -178,6 +178,11 @@ namespace MP_WPF //статистика заселения номеров, вы�
                     {
                         flag = true;
                     }
+                    else
+                    {
+                        flag=false;
+                        break;
+                    }
                 }
                 return flag;
             }
