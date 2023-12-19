@@ -180,7 +180,11 @@ namespace MP_WPF //статистика заселения номеров, вы�
                     }
                     else
                     {
+<<<<<<< HEAD
                         flag = false;
+=======
+                        flag=false;
+>>>>>>> 49af2dcc1f4231e19af803d056de1afc6065ed6b
                         break;
                     }
                 }
