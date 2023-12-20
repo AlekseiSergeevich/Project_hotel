@@ -23,7 +23,7 @@ namespace ProjectMP
         }
         public string ToStringBooking()
         {
-            return (System.String.Format("Забронирован:\r\nс {0}\r\nпо {1}\r\n", startOfBooking, endOfBooking));
+            return (System.String.Format("Забронирован:\r\nс {0}\r\nпо {1}", startOfBooking, endOfBooking));
         }
     }
 }

@@ -13,7 +13,8 @@ namespace MP_WPF
         private string fileName = "Statistic.txt";
         public void GetResult(StatisticCounter counter)//Использовать этот метод после окончания симуляции, чтобы записать статистику в файл
         {
-            StreamWriter writer = new StreamWriter(fileName, true);
+            File.WriteAllText(fileName, string.Empty);
+            StreamWriter writer = new StreamWriter(fileName, true);           
             int hotelRoomLuxeCounter = 0;
             int hotelRoomJuniourSuiteCounter = 0;
             int hotelRoomSingleRCounter = 0;

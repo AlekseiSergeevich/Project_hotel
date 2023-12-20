@@ -44,11 +44,11 @@ namespace ProjectMP
         Button[] buttons;
         List<Booking> wholeInformationAboutBooking = new List<Booking>();
         StatisticCounter statisticCounter = new StatisticCounter();
-        RequestGenerator RG = new RequestGenerator();
-        RequestHandler RH = new RequestHandler();
+        RequestGenerator requestGenerator = new RequestGenerator();
+        RequestHandler requestHandler = new RequestHandler();
         List<BookingRequest> BookingRequestsList = new List<BookingRequest>();
         Bill Bill = new Bill();
-        StatisticWriter SW = new StatisticWriter();
+        StatisticWriter statisticWriter = new StatisticWriter();
         int pastTime = 0;
         int intervalBetweenAppearanceOfTwoRequests;
         DateTime dateInSimulation = DateTime.Now;
@@ -124,7 +124,7 @@ namespace ProjectMP
                 EmptyInputGrid.Visibility = Visibility.Visible;
                 pageWithEmptyInput = 2;
             }
-            else if (int.Parse(QuantityOfLuxeTextBox.Text) + int.Parse(QuantityOfJuniorSuiteTextBox.Text) + int.Parse(QuantityOfSingleRoomTextBox.Text) + int.Parse(QuantityOfSingleRoomTextBox.Text) + int.Parse(QuantityOfDoubleRoomWithFoldingSofaTextBox.Text) != quantityOfRooms)
+            else if (int.Parse(QuantityOfLuxeTextBox.Text) + int.Parse(QuantityOfJuniorSuiteTextBox.Text) + int.Parse(QuantityOfSingleRoomTextBox.Text) + int.Parse(QuantityOfDoubleRoomTextBox.Text) + int.Parse(QuantityOfDoubleRoomWithFoldingSofaTextBox.Text) != quantityOfRooms)
             {
                 SettingsSimulation2Grid.Visibility = Visibility.Collapsed;
                 IncorrectSumGrid.Visibility = Visibility.Visible;
@@ -341,14 +341,15 @@ namespace ProjectMP
         }
         private void GeneratingRequestsButtonClick(object sender, RoutedEventArgs e)
         {
+            Random rand = new Random();
             if (string.IsNullOrWhiteSpace(QuantityOfRequestsTextBox.Text))
             {
                 return;
             }
             for (int i = 0; i < int.Parse(QuantityOfRequestsTextBox.Text); i++)
             {
-                intervalBetweenAppearanceOfTwoRequests = new Random().Next(1, 5);
-                RH.RabotaNeWolkRabotaWork(RG.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter, BookingRequestsList);
+                intervalBetweenAppearanceOfTwoRequests = rand.Next(1, 5);
+                requestHandler.RabotaNeWolkRabotaWork(requestGenerator.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter, BookingRequestsList);
                 pastTime += intervalBetweenAppearanceOfTwoRequests;
                 dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
                 //проверь это чтобы все работало корректно
@@ -402,11 +403,23 @@ namespace ProjectMP
         }
         private void ShowReportButtonClick(object sender, RoutedEventArgs e)
         {
-
+            statisticWriter.GetResult(statisticCounter);
+            FileInfo fi = new FileInfo("Statistic.txt");
+            List<int> numbersOfReports = new List<int>();
+            int numberOfReport = Directory.GetFiles(Environment.CurrentDirectory + "//Reports", "*", SearchOption.AllDirectories).Length+1;
+            fi.CopyTo(Environment.CurrentDirectory + "\\Reports" + "\\Отчет№" + numberOfReport + ".txt");
+            System.Diagnostics.Process.Start("Statistic.txt");
+            Close();
         }
         private void ShowReportImmediatelyButtonClick(object sender, RoutedEventArgs e)
         {
-
+            statisticWriter.GetResult(statisticCounter);
+            FileInfo fi = new FileInfo("Statistic.txt");
+            List<int> numbersOfReports = new List<int>();
+            int numberOfReport = Directory.GetFiles(Environment.CurrentDirectory + "//Reports", "*", SearchOption.AllDirectories).Length+1;
+            fi.CopyTo(Environment.CurrentDirectory + "\\Reports" + "\\Отчет№" + numberOfReport + ".txt");
+            System.Diagnostics.Process.Start("Statistic.txt");
+            Close();
         }
         private void ChangeOfFlags()
         {
