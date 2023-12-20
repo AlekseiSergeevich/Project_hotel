@@ -8,9 +8,24 @@ namespace ProjectMP
 {
     public class BookingDates
     {
-        public DateTime startOfBooking;
-        public DateTime endOfBooking;
-        public bool typeOfBusyness;//busyness - true;booking - false
+        private DateTime startOfBooking;
+        private DateTime endOfBooking;
+        private bool typeOfBusyness;//busyness - true;booking - false
+        public DateTime StartOfBooking
+        {
+            get { return startOfBooking; }
+            set { startOfBooking = value; }
+        }
+        public DateTime EndOfBooking
+        {
+            get { return endOfBooking; }
+            set { endOfBooking = value; }
+        }
+        public bool TypeOfBusyness
+        {
+            get { return typeOfBusyness; }
+            set { typeOfBusyness = value; }
+        }
         public BookingDates()
         {
             startOfBooking = DateTime.Now;

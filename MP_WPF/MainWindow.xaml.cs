@@ -325,11 +325,11 @@ namespace ProjectMP
                     {
                         for (int j = 0; j < wholeInformationAboutBooking[i - 1].bookings.Count; j++)
                         {
-                            if (dateInSimulation >= wholeInformationAboutBooking[i - 1].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].endOfBooking)
+                            if (dateInSimulation >= wholeInformationAboutBooking[i - 1].bookings[j].StartOfBooking && dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].EndOfBooking)
                             {
                                 roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[j].ToStringBusyness() + "\r\n";
                             }
-                            if (dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].startOfBooking)
+                            if (dateInSimulation < wholeInformationAboutBooking[i - 1].bookings[j].StartOfBooking)
                             {
                                 roomInformation.TextBox_InformationAboutRoom.Text += wholeInformationAboutBooking[i - 1].bookings[j].ToStringBooking() + "\r\n";
                             }
@@ -355,7 +355,7 @@ namespace ProjectMP
                 //проверь это чтобы все работало корректно
                 for (int j = 0; j < BookingRequestsList.Count; j++)
                 {
-                    if (BookingRequestsList[j] != null && dateInSimulation.Day >= BookingRequestsList[j].endOfBooking.Day)
+                    if (BookingRequestsList[j] != null && dateInSimulation.Day >= BookingRequestsList[j].EndOfBooking.Day)
                     {
                         Bill.SendBill(BookingRequestsList[j]);
                         BookingRequestsList[j] = null;
@@ -377,19 +377,19 @@ namespace ProjectMP
             TimeSimulationTextBox.Text = dateInSimulation.ToString();
             for (int i = 0; i < quantityOfRooms; i++)
             {
-                if (!wholeInformationAboutBooking[i].flagOfBooking && !wholeInformationAboutBooking[i].flagOfBusyness)
+                if (!wholeInformationAboutBooking[i].FlagOfBooking && !wholeInformationAboutBooking[i].FlagOfBusyness)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.LightGreen);
                 }
-                if (wholeInformationAboutBooking[i].flagOfBooking)
+                if (wholeInformationAboutBooking[i].FlagOfBooking)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Yellow);
                 }
-                if (wholeInformationAboutBooking[i].flagOfBusyness)
+                if (wholeInformationAboutBooking[i].FlagOfBusyness)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Orange);
                 }
-                if (wholeInformationAboutBooking[i].flagOfBusyness && wholeInformationAboutBooking[i].flagOfBooking)
+                if (wholeInformationAboutBooking[i].FlagOfBusyness && wholeInformationAboutBooking[i].FlagOfBooking)
                 {
                     buttons[i].Background = new SolidColorBrush(Colors.Red);
                 }
@@ -432,11 +432,11 @@ namespace ProjectMP
                 {
                     for (int j = 0; j < wholeInformationAboutBooking[i].bookings.Count; j++)
                     {
-                        if (dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].startOfBooking && dateInSimulation < wholeInformationAboutBooking[i].bookings[j].endOfBooking)
+                        if (dateInSimulation >= wholeInformationAboutBooking[i].bookings[j].StartOfBooking && dateInSimulation < wholeInformationAboutBooking[i].bookings[j].EndOfBooking)
                         {
                             checkBusy = true;
                         }
-                        if (dateInSimulation < wholeInformationAboutBooking[i].bookings[j].startOfBooking)
+                        if (dateInSimulation < wholeInformationAboutBooking[i].bookings[j].StartOfBooking)
                         {
                             checkBooking = true;
                         }
@@ -445,23 +445,23 @@ namespace ProjectMP
                 }
                 if (checkBusy && checkBooking)
                 {
-                    wholeInformationAboutBooking[i].flagOfBusyness = true;
-                    wholeInformationAboutBooking[i].flagOfBooking = true;
+                    wholeInformationAboutBooking[i].FlagOfBusyness = true;
+                    wholeInformationAboutBooking[i].FlagOfBooking = true;
                 }
                 if (checkBusy && !checkBooking)
                 {
-                    wholeInformationAboutBooking[i].flagOfBusyness = true;
-                    wholeInformationAboutBooking[i].flagOfBooking = false;
+                    wholeInformationAboutBooking[i].FlagOfBusyness = true;
+                    wholeInformationAboutBooking[i].FlagOfBooking = false;
                 }
                 if (!checkBusy && checkBooking)
                 {
-                    wholeInformationAboutBooking[i].flagOfBusyness = false;
-                    wholeInformationAboutBooking[i].flagOfBooking = true;
+                    wholeInformationAboutBooking[i].FlagOfBusyness = false;
+                    wholeInformationAboutBooking[i].FlagOfBooking = true;
                 }
                 if (!checkBusy && !checkBooking)
                 {
-                    wholeInformationAboutBooking[i].flagOfBusyness = false;
-                    wholeInformationAboutBooking[i].flagOfBooking = false;
+                    wholeInformationAboutBooking[i].FlagOfBusyness = false;
+                    wholeInformationAboutBooking[i].FlagOfBooking = false;
                 }
 
             }

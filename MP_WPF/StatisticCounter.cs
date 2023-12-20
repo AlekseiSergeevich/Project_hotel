@@ -10,20 +10,24 @@ namespace MP_WPF
 {
     public class StatisticCounter //разбить на 2 класса
     {
-        public double globalprofit;
+        private double globalprofit;
         public List<HotelRoom> roomStatistic = new List<HotelRoom>();
+        public double Globalprofit
+        {
+            get { return globalprofit; }
+        }
         public StatisticCounter()
         {
             globalprofit = 0;
         }
         public void AddToGlobalProfit(HotelRoom room)
         {
-            globalprofit += room.price;
+            globalprofit += room.Price;
             roomStatistic.Add(room);
         }
         public void AddToGlobalProfitWithDiscount(HotelRoom room)
         {
-            globalprofit += room.price * 0.7;
+            globalprofit += room.Price * 0.7;
             roomStatistic.Add(room);
         }
     }

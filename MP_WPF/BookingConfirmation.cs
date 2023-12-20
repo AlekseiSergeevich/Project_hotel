@@ -13,10 +13,10 @@ namespace ProjectMP //исправить заявку(добавить тип н
         public void SendConfirmation(BookingRequest booking)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
-            writer.WriteLine($"Здравствуйте, {booking.name}!");
+            writer.WriteLine($"Здравствуйте, {booking.Name}!");
             writer.WriteLine("Мы рады сообщить вам о успешном завершении процесса бронирования вашего пребывания в нашем отеле!");
-            writer.WriteLine($"Напоминаем, что вы забронировали номер {booking.room.type} стоимостью - {booking.room.price}р.");
-            writer.WriteLine($"Бронь будет распространяться на данные даты {booking.startOfBooking} - {booking.endOfBooking}.");
+            writer.WriteLine($"Напоминаем, что вы забронировали номер {booking.room.TypeOfRoom} стоимостью - {booking.room.Price}р.");
+            writer.WriteLine($"Бронь будет распространяться на данные даты {booking.StartOfBooking} - {booking.EndOfBooking}.");
             writer.WriteLine("Спасибо, что выбрали наш отель!");
             writer.WriteLine("По всем вопросам обращаться по телефону +79108107589");
             writer.WriteLine();

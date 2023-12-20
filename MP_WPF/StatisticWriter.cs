@@ -54,7 +54,7 @@ namespace MP_WPF
             halfOfThisRoom = Math.Round((Convert.ToDouble(hotelRoomDoubleWithSofaCounter) / Convert.ToDouble(counter.roomStatistic.Count)) * 100, 2);
             writer.WriteLine($"Номер Double Room With Sofa выбирали в {halfOfThisRoom} процентах случаев, а точнее {hotelRoomDoubleWithSofaCounter} раз.");
             writer.WriteLine($"Всего было обработано {counter.roomStatistic.Count} заявок.");
-            writer.WriteLine($"Всего отель заработал {Math.Round(counter.globalprofit, 2)} рублей за указанный период.");
+            writer.WriteLine($"Всего отель заработал {Math.Round(counter.Globalprofit, 2)} рублей за указанный период.");
             writer.WriteLine();
             writer.Close();
         }
