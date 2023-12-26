@@ -4,24 +4,15 @@
 winexe
 C#
 .cs
-<<<<<<< HEAD
-C:\Users\One\source\repos\MP_WPF_\MP_WPF\obj\Debug\
-=======
 D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\
->>>>>>> 671e073c7f0947d18aebd3fe48a4c7db376ceda0
 MP_WPF
 none
 false
 DEBUG;TRACE
-<<<<<<< HEAD
-C:\Users\One\source\repos\MP_WPF_\MP_WPF\App.xaml
-21906638503
-=======
 D:\Информатика\c#\lastversion\MP_WPF\App.xaml
 2648302946
->>>>>>> 671e073c7f0947d18aebd3fe48a4c7db376ceda0
 
-22-887789776
+25-39323956
 13-1310406943
 MainWindow.xaml;RoomInformation.xaml;
 

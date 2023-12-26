@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace MP_WPF
 {
-    public class StatisticWriter
+    public class StatisticWriter : IStatisticWriter
     {
         private string fileName = "Statistic.txt";
-        public void GetResult(StatisticCounter counter)//Использовать этот метод после окончания симуляции, чтобы записать статистику в файл
+        public void Write(StatisticCounter counter)//Использовать этот метод после окончания симуляции, чтобы записать статистику в файл
         {
             File.WriteAllText(fileName, string.Empty);
             StreamWriter writer = new StreamWriter(fileName, true);

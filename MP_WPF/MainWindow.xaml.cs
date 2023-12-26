@@ -49,6 +49,7 @@ namespace ProjectMP
         List<BookingRequest> BookingRequestsList = new List<BookingRequest>();
         Bill Bill = new Bill();
         StatisticWriter statisticWriter = new StatisticWriter();
+        AnswerAboutBooking Answer = new AnswerAboutBooking();
         int pastTime = 0;
         int intervalBetweenAppearanceOfTwoRequests;
         DateTime dateInSimulation = DateTime.Now;
@@ -349,7 +350,18 @@ namespace ProjectMP
             for (int i = 0; i < int.Parse(QuantityOfRequestsTextBox.Text); i++)
             {
                 intervalBetweenAppearanceOfTwoRequests = rand.Next(1, 5);
-                requestHandler.RabotaNeWolkRabotaWork(requestGenerator.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, statisticCounter, BookingRequestsList);
+                Answer = requestHandler.RabotaNeWolkRabotaWork(requestGenerator.Generator(intervalBetweenAppearanceOfTwoRequests), wholeInformationAboutBooking, BookingRequestsList);
+                if (Answer.ResultOfBookibg == true)
+                {
+                    if (Answer.Discount == true)
+                    {
+                        statisticCounter.AddToGlobalProfitWithDiscount(Answer.hotelRoom);
+                    }
+                    else
+                    {
+                        statisticCounter.AddToGlobalProfit(Answer.hotelRoom);
+                    }
+                }
                 pastTime += intervalBetweenAppearanceOfTwoRequests;
                 dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
                 //проверь это чтобы все работало корректно
@@ -357,7 +369,7 @@ namespace ProjectMP
                 {
                     if (BookingRequestsList[j] != null && dateInSimulation.Day >= BookingRequestsList[j].EndOfBooking.Day)
                     {
-                        Bill.SendBill(BookingRequestsList[j]);
+                        Bill.Write(BookingRequestsList[j]);
                         BookingRequestsList[j] = null;
                     }
                 }
@@ -403,7 +415,7 @@ namespace ProjectMP
         }
         private void ShowReportButtonClick(object sender, RoutedEventArgs e)
         {
-            statisticWriter.GetResult(statisticCounter);
+            statisticWriter.Write(statisticCounter);
             FileInfo fi = new FileInfo("Statistic.txt");
             List<int> numbersOfReports = new List<int>();
             int numberOfReport = Directory.GetFiles(Environment.CurrentDirectory + "//Reports", "*", SearchOption.AllDirectories).Length + 1;
@@ -413,7 +425,7 @@ namespace ProjectMP
         }
         private void ShowReportImmediatelyButtonClick(object sender, RoutedEventArgs e)
         {
-            statisticWriter.GetResult(statisticCounter);
+            statisticWriter.Write(statisticCounter);
             FileInfo fi = new FileInfo("Statistic.txt");
             List<int> numbersOfReports = new List<int>();
             int numberOfReport = Directory.GetFiles(Environment.CurrentDirectory + "//Reports", "*", SearchOption.AllDirectories).Length + 1;

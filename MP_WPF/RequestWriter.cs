@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace MP_WPF
 {
-    internal class RequestWriter
+    internal class RequestWriter : IWriter
     {
         private string fileName = "Requests.txt";
-        public void WriteRequest(BookingRequest request)
+        public void Write(BookingRequest request)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
             writer.Write("Заявка.");

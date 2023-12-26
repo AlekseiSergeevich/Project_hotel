@@ -55,11 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnswerAboutBooking.cs" />
     <Compile Include="Bill.cs" />
     <Compile Include="Booking.cs" />
     <Compile Include="BookingConfirmation.cs" />
     <Compile Include="BookingDates.cs" />
     <Compile Include="BookingRequest.cs" />
+    <Compile Include="InterfaceWriter.cs" />
+    <Compile Include="IStatisticWriter.cs" />
     <Compile Include="RequestWriter.cs" />
     <Compile Include="StatisticCounter.cs" />
     <Compile Include="DoubleRoom.cs" />

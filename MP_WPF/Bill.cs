@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace MP_WPF
 {
-    public class Bill //счет
+    public class Bill : IWriter //счет
     {
         private string fileName = "Bill.txt";
-        public void SendBill(BookingRequest request)
+        public void Write(BookingRequest request)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
             writer.WriteLine($"Здравствуйте, {request.Name}!");

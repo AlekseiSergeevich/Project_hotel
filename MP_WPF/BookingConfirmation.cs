@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MP_WPF;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ProjectMP //исправить заявку(добавить тип номера для бронирования)
 {
-    public class BookingConfirmation //сообщение о подтверждении бронирования и запись их в файл
+    public class BookingConfirmation : IWriter //сообщение о подтверждении бронирования и запись их в файл
     {
         private string fileName = "confirmation.txt";
-        public void SendConfirmation(BookingRequest booking)
+        public void Write(BookingRequest booking)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
             writer.WriteLine($"Здравствуйте, {booking.Name}!");

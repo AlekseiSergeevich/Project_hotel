@@ -12,14 +12,16 @@ namespace MP_WPF //статистика заселения номеров, вы�
     {
         BookingConfirmation confirmation = new BookingConfirmation();
         RequestWriter requestWriter = new RequestWriter();
-        public void RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list, StatisticCounter statistic, List<BookingRequest> BookingRequestslist)
+        AnswerAboutBooking answer= new AnswerAboutBooking();
+        public AnswerAboutBooking RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list, List<BookingRequest> BookingRequestslist)
         {
             int number = FindFreeRoom(list, request);
-            requestWriter.WriteRequest(request);
+            requestWriter.Write(request);
             if (number != -1) //заполняет лист данными из заявки, если есть номер соответствующий запросу покупателя
             {
                 EntersData(request, list, number, BookingRequestslist);
-                statistic.AddToGlobalProfit(request.room);
+                MakeAnswer(request.room, false, true);
+                return (answer);
             }
             else //создание второй заявки, но с другим номером, если не смогли найти подходящий номер
             {
@@ -30,61 +32,69 @@ namespace MP_WPF //статистика заселения номеров, вы�
                     BookingRequest secondTryToFind = new BookingRequest();
                     if (request.room is Luxe)//100%
                     {
-                        secondTryToFind = request;
-                        secondTryToFind.room = new JuniorSuite();
+                        secondTryToFind = EntersDataAfterSecondTry(request, new JuniorSuite(), secondTryToFind);
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            statistic.AddToGlobalProfit(secondTryToFind.room);
+                            MakeAnswer(secondTryToFind.room, false, true);
+                            return (answer);
+
                         }
                     }
                     if (request.room is JuniorSuite)//70%
                     {
-                        secondTryToFind = request;
-                        secondTryToFind.room = new Luxe();
+                        secondTryToFind = EntersDataAfterSecondTry(request, new Luxe(), secondTryToFind);
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
-                            EntersData(secondTryToFind, list, number, BookingRequestslist);//сделать скидку 70%
-                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
+                            EntersData(secondTryToFind, list, number, BookingRequestslist);
+                            MakeAnswer(secondTryToFind.room, true, true);
+                            return (answer);
                         }
                     }
                     if (request.room is SingleRoom)//70%
                     {
-                        secondTryToFind = request;
-                        secondTryToFind.room = new JuniorSuite();
+                        secondTryToFind = EntersDataAfterSecondTry(request, new JuniorSuite(), secondTryToFind);
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
+                            MakeAnswer(secondTryToFind.room, true, true);
+                            return (answer);
                         }
                     }
                     if (request.room is DoubleRoom)//70%
                     {
-                        secondTryToFind = request;
-                        secondTryToFind.room = new DoubleRoomWithSofa();
+                        secondTryToFind = EntersDataAfterSecondTry(request, new DoubleRoomWithSofa(), secondTryToFind);
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
+                            MakeAnswer(secondTryToFind.room, true, true);
+                            return (answer);
                         }
                     }
                     if (request.room is DoubleRoomWithSofa)//70%
                     {
-                        secondTryToFind = request;
-                        secondTryToFind.room = new DoubleRoom();
+                        secondTryToFind = EntersDataAfterSecondTry(request, new DoubleRoom(), secondTryToFind);
                         number = FindFreeRoom(list, secondTryToFind);
                         if (number != -1)
                         {
                             EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            statistic.AddToGlobalProfitWithDiscount(secondTryToFind.room);
+                            MakeAnswer(secondTryToFind.room, true, true);
+                            return (answer);
                         }
                     }
                 }
             }
+            return (answer);
+        }
+        private BookingRequest EntersDataAfterSecondTry(BookingRequest request, HotelRoom newRoom, BookingRequest secondTryToFind)
+        {
+            secondTryToFind = request;
+            secondTryToFind.room = newRoom;
+            return secondTryToFind;
         }
         private int FindFreeRoom(List<Booking> list, BookingRequest request) // ищет свободный номер для гостя согласно его требованиям
         {
@@ -95,12 +105,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is Luxe)
                     {
-                        bool check = DateManager(list[i], request);
-                        if (check == true)
-                        {
-                            flag = i;
-                            return flag;
-                        }
+                        flag = FindDate(list, request, flag, i);
                     }
                 }
             }
@@ -110,12 +115,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is JuniorSuite)
                     {
-                        bool check = DateManager(list[i], request);
-                        if (check == true)
-                        {
-                            flag = i;
-                            return flag;
-                        }
+                        flag = FindDate(list, request, flag, i);
                     }
                 }
             }
@@ -125,12 +125,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is SingleRoom)
                     {
-                        bool check = DateManager(list[i], request);
-                        if (check == true)
-                        {
-                            flag = i;
-                            return flag;
-                        }
+                        flag = FindDate(list, request, flag, i);
                     }
                 }
             }
@@ -140,12 +135,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is DoubleRoom)
                     {
-                        bool check = DateManager(list[i], request);
-                        if (check == true)
-                        {
-                            flag = i;
-                            return flag;
-                        }
+                        flag = FindDate(list, request, flag, i);
                     }
                 }
             }
@@ -155,16 +145,25 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 {
                     if (list[i].room is DoubleRoomWithSofa)
                     {
-                        bool check = DateManager(list[i], request);
-                        if (check == true)
-                        {
-                            flag = i;
-                            return flag;
-                        }
+                        flag = FindDate(list, request, flag, i);
                     }
                 }
             }
             return flag;
+        }
+        private int FindDate(List<Booking> list, BookingRequest request, int flag, int i)
+        {
+            bool check = DateManager(list[i], request);
+            if (check == true)
+            {
+                flag = i;
+                return flag;
+            }
+            else
+            {
+                return flag;
+            }
+            
         }
         private bool DateManager(Booking booking, BookingRequest request) // определяет можнт ли гость заехать в ДАННЫЙ номер в даты, когда он хочет(будет ли номер свободен)
         {
@@ -193,7 +192,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
         private void EntersData(BookingRequest request, List<Booking> list, int number, List<BookingRequest> BookingRequestsList)// вводит данные о занятости номера в лист
         {
             list[number].bookings.Add(request.bookingDates);
-            confirmation.SendConfirmation(request);
+            confirmation.Write(request);
             BookingRequestsList.Add(request);
             if (DateTime.Compare(request.StartOfBooking, request.TimeOfReceiptOfApplication) == 0)
             {
@@ -204,6 +203,12 @@ namespace MP_WPF //статистика заселения номеров, вы�
             {
                 list[number].FlagOfBooking = true;
             }
+        }
+        private void MakeAnswer(HotelRoom room, bool dis, bool res)
+        {
+            answer.hotelRoom = room;
+            answer.Discount = dis;
+            answer.ResultOfBookibg = res;
         }
     }
 }
