@@ -177,7 +177,7 @@ namespace MP_WPF //статистика заселения номеров, вы�
             {
                 for (int i = 0; i < booking.bookings.Count; i++)
                 {
-                    if (booking.bookings[i].startOfBooking > request.startOfBooking && booking.bookings[i].startOfBooking > request.endOfBooking || booking.bookings[i].endOfBooking < request.startOfBooking && booking.bookings[i].endOfBooking < request.endOfBooking)
+                    if (booking.bookings[i].StartOfBooking > request.StartOfBooking && booking.bookings[i].StartOfBooking > request.EndOfBooking || booking.bookings[i].EndOfBooking < request.StartOfBooking && booking.bookings[i].EndOfBooking < request.EndOfBooking)
                     {
                         flag = true;
                     }
@@ -195,14 +195,14 @@ namespace MP_WPF //статистика заселения номеров, вы�
             list[number].bookings.Add(request.bookingDates);
             confirmation.SendConfirmation(request);
             BookingRequestsList.Add(request);
-            if (DateTime.Compare(request.startOfBooking, request.timeOfReceiptOfApplication) == 0)
+            if (DateTime.Compare(request.StartOfBooking, request.TimeOfReceiptOfApplication) == 0)
             {
-                list[number].flagOfBusyness = true;
-                list[number].bookings[list[number].bookings.Count - 1].typeOfBusyness = true;
+                list[number].FlagOfBusyness = true;
+                list[number].bookings[list[number].bookings.Count - 1].TypeOfBusyness = true;
             }
             else
             {
-                list[number].flagOfBooking = true;
+                list[number].FlagOfBooking = true;
             }
         }
     }

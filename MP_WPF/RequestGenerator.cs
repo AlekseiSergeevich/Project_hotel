@@ -11,28 +11,28 @@ namespace ProjectMP
     {
         BookingRequest bookingRequest;
         private DateTime date = DateTime.Now;
-        Random rnd = new Random();
+        private Random rnd = new Random();
         public BookingRequest Generator(int itervalBetweenAplications) //Дописать создание файла с заявками
         {
             bookingRequest = new BookingRequest();
             int count = File.ReadAllLines("Visiters.txt").Length;
             int finish = rnd.Next(0, count);
-            bookingRequest.name = File.ReadLines("Visiters.txt").Skip(finish).First();
+            bookingRequest.Name = File.ReadLines("Visiters.txt").Skip(finish).First();
             DateTime startData = date.AddHours(Convert.ToDouble(itervalBetweenAplications));
             startData = startData.AddDays(Convert.ToDouble(rnd.Next(0, 4)));
             DateTime endData = startData;
             endData = endData.AddDays(Convert.ToDouble(rnd.Next(1, 4)));
-            bookingRequest.bookingDates.startOfBooking = startData;
-            bookingRequest.bookingDates.endOfBooking = endData;
+            bookingRequest.bookingDates.StartOfBooking = startData;
+            bookingRequest.bookingDates.EndOfBooking = endData;
             date = date.AddHours(Convert.ToDouble(itervalBetweenAplications));
-            bookingRequest.timeOfReceiptOfApplication = date;
-            bookingRequest.startOfBooking = startData;
-            bookingRequest.endOfBooking = endData;
+            bookingRequest.TimeOfReceiptOfApplication = date;
+            bookingRequest.StartOfBooking = startData;
+            bookingRequest.EndOfBooking = endData;
             int num = rnd.Next(000, 999);
             int num2 = rnd.Next(00, 99);
             int num3 = rnd.Next(00, 99);
             string phone = "+7 (987)" + " " + num.ToString() + " " + num2.ToString() + " " + num3.ToString();
-            bookingRequest.telephoneNumber = phone;
+            bookingRequest.TelephoneNumber = phone;
             int room = rnd.Next(0, 5);
             if (room == 0)
             {

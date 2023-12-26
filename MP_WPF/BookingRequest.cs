@@ -8,13 +8,39 @@ namespace ProjectMP
 {
     public class BookingRequest
     {
-        public string name;
-        public DateTime startOfBooking;
-        public DateTime endOfBooking;
+        private string name;
+        private DateTime startOfBooking;
+        private DateTime endOfBooking;
         public BookingDates bookingDates = new BookingDates();
-        public string telephoneNumber;
-        public DateTime timeOfReceiptOfApplication;
+        private string telephoneNumber;
+        private DateTime timeOfReceiptOfApplication;
         public HotelRoom room;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public DateTime StartOfBooking
+        {
+            get { return startOfBooking; }
+            set { startOfBooking = value; }
+        }
+        public DateTime EndOfBooking
+        {
+            get { return endOfBooking; }
+            set { endOfBooking = value; }
+        }
+        public string TelephoneNumber
+        {
+            get { return telephoneNumber; }
+            set { telephoneNumber = value; }
+        }
+        public DateTime TimeOfReceiptOfApplication
+        {
+            get { return timeOfReceiptOfApplication; }
+            set { timeOfReceiptOfApplication = value; }
+        }
+
         public BookingRequest()
         {
 

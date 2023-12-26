@@ -15,14 +15,13 @@ namespace MP_WPF
         {
             StreamWriter writer = new StreamWriter(fileName, true);
             writer.Write("Заявка.");
-            writer.WriteLine($"Фамилия Имя: {request.name}.");
-            writer.WriteLine($"Дата заезда - выезда: {request.startOfBooking} - {request.endOfBooking}.");
-            writer.WriteLine($"Тип номера: {request.room.type}");
-            writer.WriteLine($"Номер телефона заказчика: {request.telephoneNumber}");
-            writer.WriteLine($"Время подачи заявки: {request.timeOfReceiptOfApplication}");
+            writer.WriteLine($"Фамилия Имя: {request.Name}.");
+            writer.WriteLine($"Дата заезда - выезда: {request.StartOfBooking} - {request.EndOfBooking}.");
+            writer.WriteLine($"Тип номера: {request.room.TypeOfRoom}");
+            writer.WriteLine($"Номер телефона заказчика: {request.TelephoneNumber}");
+            writer.WriteLine($"Время подачи заявки: {request.TimeOfReceiptOfApplication}");
             writer.WriteLine();
             writer.Close();
         }
     }
 }
-

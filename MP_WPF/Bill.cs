@@ -14,9 +14,9 @@ namespace MP_WPF
         public void SendBill(BookingRequest request)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
-            writer.WriteLine($"Здравствуйте, {request.name}!");
-            writer.WriteLine($"Вы прибывали в отеле с {request.startOfBooking} по {request.endOfBooking}. Мы надеемся, что вам все понравилось!");
-            writer.WriteLine($"Сумма вашего счета составляет {request.room.price}");
+            writer.WriteLine($"Здравствуйте, {request.Name}!");
+            writer.WriteLine($"Вы прибывали в отеле с {request.StartOfBooking} по {request.EndOfBooking}. Мы надеемся, что вам все понравилось!");
+            writer.WriteLine($"Сумма вашего счета составляет {request.room.Price}");
             writer.WriteLine("Всего хорошего,");
             writer.WriteLine("Администрация отеля.");
             writer.WriteLine();

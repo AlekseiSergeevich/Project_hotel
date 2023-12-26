@@ -10,10 +10,25 @@ namespace ProjectMP
     {
         public HotelRoom room;
         //public BookingDates dates;
-        public bool flagOfBooking;
-        public int roomNumber;
-        public bool flagOfBusyness;
+        private bool flagOfBooking;
+        private int roomNumber;
+        private bool flagOfBusyness;
         public List<BookingDates> bookings = new List<BookingDates>(); //лист чтобы записывать даты, в которые этот номер будет забронирован
+        public bool FlagOfBooking
+        {
+            get { return flagOfBooking; }
+            set { flagOfBooking = value; }
+        }
+        public bool FlagOfBusyness
+        {
+            get { return flagOfBusyness; }
+            set { flagOfBusyness = value; }
+        }
+        public int RoomNumber
+        {
+            get { return roomNumber; }
+            set { roomNumber = value; }
+        }
         public Booking(HotelRoom room, bool flagOfBusyness, bool flagOfBooking, int roomNumber)
         {
             this.room = room;
