@@ -74,6 +74,7 @@ D:\Информатика\c#\projeeect\MP_WPF\obj\Debug\MP_WPF.csproj.GenerateRe
 D:\Информатика\c#\projeeect\MP_WPF\obj\Debug\MP_WPF.csproj.CoreCompileInputs.cache
 D:\Информатика\c#\projeeect\MP_WPF\obj\Debug\MP_WPF.exe
 D:\Информатика\c#\projeeect\MP_WPF\obj\Debug\MP_WPF.pdb
+<<<<<<< HEAD
 C:\Users\One\source\repos\MP_WPF_\MP_WPF\bin\Debug\MP_WPF.exe.config
 C:\Users\One\source\repos\MP_WPF_\MP_WPF\bin\Debug\MP_WPF.exe
 C:\Users\One\source\repos\MP_WPF_\MP_WPF\bin\Debug\MP_WPF.pdb
@@ -91,3 +92,23 @@ C:\Users\One\source\repos\MP_WPF_\MP_WPF\obj\Debug\MP_WPF.csproj.GenerateResourc
 C:\Users\One\source\repos\MP_WPF_\MP_WPF\obj\Debug\MP_WPF.csproj.CoreCompileInputs.cache
 C:\Users\One\source\repos\MP_WPF_\MP_WPF\obj\Debug\MP_WPF.exe
 C:\Users\One\source\repos\MP_WPF_\MP_WPF\obj\Debug\MP_WPF.pdb
+=======
+D:\Информатика\c#\lastversion\MP_WPF\bin\Debug\MP_WPF.exe.config
+D:\Информатика\c#\lastversion\MP_WPF\bin\Debug\MP_WPF.exe
+D:\Информатика\c#\lastversion\MP_WPF\bin\Debug\MP_WPF.pdb
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.csproj.AssemblyReference.cache
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.csproj.SuggestedBindingRedirects.cache
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MainWindow.g.cs
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\RoomInformation.g.cs
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\App.g.cs
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF_MarkupCompile.cache
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF_MarkupCompile.lref
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MainWindow.baml
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\RoomInformation.baml
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.g.resources
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.Properties.Resources.resources
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.csproj.GenerateResource.cache
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.csproj.CoreCompileInputs.cache
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.exe
+D:\Информатика\c#\lastversion\MP_WPF\obj\Debug\MP_WPF.pdb
+>>>>>>> 671e073c7f0947d18aebd3fe48a4c7db376ceda0
