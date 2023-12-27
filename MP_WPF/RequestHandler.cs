@@ -10,160 +10,99 @@ namespace MP_WPF //статистика заселения номеров, вы�
 {
     public class RequestHandler //обработчик заявок
     {
-        BookingConfirmation confirmation = new BookingConfirmation();
-        RequestWriter requestWriter = new RequestWriter();
         AnswerAboutBooking answer= new AnswerAboutBooking();
+        Random rnd = new Random();
         public AnswerAboutBooking RabotaNeWolkRabotaWork(BookingRequest request, List<Booking> list, List<BookingRequest> BookingRequestslist)
         {
             int number = FindFreeRoom(list, request);
-            requestWriter.Write(request);
             if (number != -1) //заполняет лист данными из заявки, если есть номер соответствующий запросу покупателя
             {
-                EntersData(request, list, number, BookingRequestslist);
-                MakeAnswer(request.room, false, true);
+                list[number] = EntersData(request, list[number], BookingRequestslist);
+                MakeAnswer(request, false, true);
                 return (answer);
             }
             else //создание второй заявки, но с другим номером, если не смогли найти подходящий номер
             {
-                Random rnd = new Random();
                 int accept = rnd.Next(1, 3);
                 if (accept == 1)
                 {
-                    BookingRequest secondTryToFind = new BookingRequest();
-                    if (request.room is Luxe)//100%
+                    HotelRoom proposedRoom = DiscountAnalayzer(request.room);
+                    BookingRequest secondTryToFind = EntersDataAfterSecondTry(request, proposedRoom);
+                    number = FindFreeRoom(list, secondTryToFind);
+                    if (number != -1)
                     {
-                        secondTryToFind = EntersDataAfterSecondTry(request, new JuniorSuite(), secondTryToFind);
-                        number = FindFreeRoom(list, secondTryToFind);
-                        if (number != -1)
-                        {
-                            EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            MakeAnswer(secondTryToFind.room, false, true);
-                            return (answer);
+                        list[number] = EntersData(request, list[number], BookingRequestslist);
+                        MakeAnswer(secondTryToFind, true, true);
+                        return (answer);
 
-                        }
-                    }
-                    if (request.room is JuniorSuite)//70%
-                    {
-                        secondTryToFind = EntersDataAfterSecondTry(request, new Luxe(), secondTryToFind);
-                        number = FindFreeRoom(list, secondTryToFind);
-                        if (number != -1)
-                        {
-                            EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            MakeAnswer(secondTryToFind.room, true, true);
-                            return (answer);
-                        }
-                    }
-                    if (request.room is SingleRoom)//70%
-                    {
-                        secondTryToFind = EntersDataAfterSecondTry(request, new JuniorSuite(), secondTryToFind);
-                        number = FindFreeRoom(list, secondTryToFind);
-                        if (number != -1)
-                        {
-                            EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            MakeAnswer(secondTryToFind.room, true, true);
-                            return (answer);
-                        }
-                    }
-                    if (request.room is DoubleRoom)//70%
-                    {
-                        secondTryToFind = EntersDataAfterSecondTry(request, new DoubleRoomWithSofa(), secondTryToFind);
-                        number = FindFreeRoom(list, secondTryToFind);
-                        if (number != -1)
-                        {
-                            EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            MakeAnswer(secondTryToFind.room, true, true);
-                            return (answer);
-                        }
-                    }
-                    if (request.room is DoubleRoomWithSofa)//70%
-                    {
-                        secondTryToFind = EntersDataAfterSecondTry(request, new DoubleRoom(), secondTryToFind);
-                        number = FindFreeRoom(list, secondTryToFind);
-                        if (number != -1)
-                        {
-                            EntersData(secondTryToFind, list, number, BookingRequestslist);
-                            MakeAnswer(secondTryToFind.room, true, true);
-                            return (answer);
-                        }
-                    }
+                    }                   
                 }
             }
             return (answer);
         }
-        private BookingRequest EntersDataAfterSecondTry(BookingRequest request, HotelRoom newRoom, BookingRequest secondTryToFind)
+        private HotelRoom DiscountAnalayzer(HotelRoom room)
         {
-            secondTryToFind = request;
+            if(room is Luxe)
+            {
+                HotelRoom hotelRoom = new Luxe();
+                return (hotelRoom);
+            }
+            if (room is JuniorSuite)
+            {
+                HotelRoom hotelRoom = new Luxe();
+                return (hotelRoom);
+            }
+            if (room is SingleRoom)
+            {
+                HotelRoom hotelRoom = new JuniorSuite();
+                return (hotelRoom);
+            }
+            if (room is DoubleRoom)
+            {
+                HotelRoom hotelRoom = new DoubleRoomWithSofa();
+                return (hotelRoom);
+            }
+            if (room is DoubleRoomWithSofa)
+            {
+                HotelRoom hotelRoom = new DoubleRoom();
+                return (hotelRoom);
+            }
+            return null;
+        }
+        private BookingRequest EntersDataAfterSecondTry(BookingRequest request, HotelRoom newRoom)
+        {
+            BookingRequest secondTryToFind = request;
             secondTryToFind.room = newRoom;
             return secondTryToFind;
         }
         private int FindFreeRoom(List<Booking> list, BookingRequest request) // ищет свободный номер для гостя согласно его требованиям
         {
             int flag = -1;
-            if (request.room is Luxe)
+            var variants = list.FindAll(req => req.room.TypeOfRoom.CompareTo(request.room.TypeOfRoom) == 0);
+            for (int i = 0; i < variants.Count; i++)
             {
-                for (int i = 0; i < list.Count; i++)
+                flag = FindDate(variants, request, i);
+                if (flag != -1)
                 {
-                    if (list[i].room is Luxe)
-                    {
-                        flag = FindDate(list, request, flag, i);
-                    }
-                }
-            }
-            if (request.room is JuniorSuite)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].room is JuniorSuite)
-                    {
-                        flag = FindDate(list, request, flag, i);
-                    }
-                }
-            }
-            if (request.room is SingleRoom)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].room is SingleRoom)
-                    {
-                        flag = FindDate(list, request, flag, i);
-                    }
-                }
-            }
-            if (request.room is DoubleRoom)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].room is DoubleRoom)
-                    {
-                        flag = FindDate(list, request, flag, i);
-                    }
-                }
-            }
-            if (request.room is DoubleRoomWithSofa)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].room is DoubleRoomWithSofa)
-                    {
-                        flag = FindDate(list, request, flag, i);
-                    }
+                    return flag;
                 }
             }
             return flag;
         }
-        private int FindDate(List<Booking> list, BookingRequest request, int flag, int i)
+        private int FindDate(List<Booking> variants, BookingRequest request, int position)
         {
-            bool check = DateManager(list[i], request);
-            if (check == true)
+            int flag = -1;
+            bool check = DateManager(variants[position], request);
+            if (check)
             {
-                flag = i;
+                flag = variants[position].RoomNumber - 1;
                 return flag;
             }
             else
             {
                 return flag;
             }
-            
+
         }
         private bool DateManager(Booking booking, BookingRequest request) // определяет можнт ли гость заехать в ДАННЫЙ номер в даты, когда он хочет(будет ли номер свободен)
         {
@@ -189,26 +128,26 @@ namespace MP_WPF //статистика заселения номеров, вы�
                 return flag;
             }
         }
-        private void EntersData(BookingRequest request, List<Booking> list, int number, List<BookingRequest> BookingRequestsList)// вводит данные о занятости номера в лист
+        private Booking EntersData(BookingRequest request, Booking onePositionInList, List<BookingRequest> BookingRequestsList)// вводит данные о занятости номера в лист
         {
-            list[number].bookings.Add(request.bookingDates);
-            confirmation.Write(request);
+            onePositionInList.bookings.Add(request.bookingDates);
             BookingRequestsList.Add(request);
             if (DateTime.Compare(request.StartOfBooking, request.TimeOfReceiptOfApplication) == 0)
             {
-                list[number].FlagOfBusyness = true;
-                list[number].bookings[list[number].bookings.Count - 1].TypeOfBusyness = true;
+                onePositionInList.FlagOfBusyness = true;
+                onePositionInList.bookings[onePositionInList.bookings.Count - 1].TypeOfBusyness = true;
             }
             else
             {
-                list[number].FlagOfBooking = true;
+                onePositionInList.FlagOfBooking = true;
             }
+            return onePositionInList;
         }
-        private void MakeAnswer(HotelRoom room, bool dis, bool res)
+        private void MakeAnswer(BookingRequest request, bool dis, bool res)
         {
-            answer.hotelRoom = room;
             answer.Discount = dis;
             answer.ResultOfBookibg = res;
+            answer.request= request;
         }
     }
 }

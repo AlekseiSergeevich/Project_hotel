@@ -16,7 +16,7 @@ namespace MP_WPF
             StreamWriter writer = new StreamWriter(fileName, true);
             writer.WriteLine($"Здравствуйте, {request.Name}!");
             writer.WriteLine($"Вы прибывали в отеле с {request.StartOfBooking} по {request.EndOfBooking}. Мы надеемся, что вам все понравилось!");
-            writer.WriteLine($"Сумма вашего счета составляет {request.room.Price}");
+            writer.WriteLine($"Сумма вашего счета составляет {request.room.Price * (request.EndOfBooking-request.StartOfBooking).TotalDays}");
             writer.WriteLine("Всего хорошего,");
             writer.WriteLine("Администрация отеля.");
             writer.WriteLine();

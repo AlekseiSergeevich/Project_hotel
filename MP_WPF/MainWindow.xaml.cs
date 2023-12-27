@@ -50,6 +50,8 @@ namespace ProjectMP
         Bill Bill = new Bill();
         StatisticWriter statisticWriter = new StatisticWriter();
         AnswerAboutBooking Answer = new AnswerAboutBooking();
+        BookingConfirmation BookingConfirmation = new BookingConfirmation();
+        RequestWriter RW= new RequestWriter();
         int pastTime = 0;
         int intervalBetweenAppearanceOfTwoRequests;
         DateTime dateInSimulation = DateTime.Now;
@@ -355,13 +357,16 @@ namespace ProjectMP
                 {
                     if (Answer.Discount == true)
                     {
-                        statisticCounter.AddToGlobalProfitWithDiscount(Answer.hotelRoom);
+                        statisticCounter.AddToGlobalProfitWithDiscount(Answer.request.room);
+                        BookingConfirmation.Write(Answer.request);
                     }
                     else
                     {
-                        statisticCounter.AddToGlobalProfit(Answer.hotelRoom);
+                        statisticCounter.AddToGlobalProfit(Answer.request.room);
                     }
+                    RW.Write(Answer.request);
                 }
+                else RW.Write(Answer.request);
                 pastTime += intervalBetweenAppearanceOfTwoRequests;
                 dateInSimulation = dateInSimulation.AddHours(intervalBetweenAppearanceOfTwoRequests);
                 //проверь это чтобы все работало корректно

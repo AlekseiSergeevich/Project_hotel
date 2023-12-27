@@ -10,11 +10,11 @@ namespace MP_WPF
     public class AnswerAboutBooking
     {
         private bool resultOfBookibg;
-        public HotelRoom hotelRoom;
         private bool discount;
+        public BookingRequest request;
         public AnswerAboutBooking()
         {
-            hotelRoom = new Luxe();
+            request = new BookingRequest();
             resultOfBookibg = false;
             discount = false;
         }
